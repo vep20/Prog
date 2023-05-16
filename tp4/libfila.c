@@ -4,6 +4,7 @@
 fila_t *fila_cria ();
 
 void fila_destroi (fila_t **fila){
+    /*carlinhos passou por aqui*/
 
 }
 
