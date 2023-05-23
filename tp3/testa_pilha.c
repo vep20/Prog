@@ -53,7 +53,7 @@ void teste_pop_e_topo (pilha_t* p)
         if (pilha_topo (p, &dado))
             printf ("\tTopo = %d, ", dado);
         if (pop (p, &dado))
-            printf ("removeu %d\n", dado);
+            printf ("removeu %d\n", dado);  
     }
 }
 
