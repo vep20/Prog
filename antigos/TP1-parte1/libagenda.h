@@ -3,7 +3,7 @@
  * Autor:
  *    Luis Carlos Erpen de Bona
  *
- * Versao 1.0.0 de 01/06/2023
+ * Versao 1.0.1 de 01/06/2023
 */
 
 /* Lista de compromissos:
@@ -34,9 +34,16 @@ typedef struct dia {
 
 /* Lista de meses:
    A lista de meses eh uma lista circular duplamente encadeada. 
+
    Na criacao da agenda a lista de meses possui apenas o mes 1, ao mudar de
    mes na agenda (funcoes prox_mes_agenda ou ant_mes_agenda) eh que os meses
-   podem ser criados. */  
+   podem ser criados. 
+
+   As insercoes na Lista de meses somente ocorrem quando andamos na agenda para 
+   o proximo (ou anterior) mes. Alem disso a agenda nao aponta para um primeiro 
+   mes, mas para um mes_atual (ptr_mes_atual), por isso o uso de sentinela na
+   implementacao pode ser desnecessario. Voce pode implementar como achar melhor.
+*/  
 
 typedef struct mes {
 	int mes;  /* mes representado */
@@ -46,9 +53,9 @@ typedef struct mes {
 } mes_t;
 
 /* Agenda:
-   O membro meses aponta para a lista de meses. Os membros mes_atual e
-   ptr_mes_atual representam o mes corrente da agenda, a ideia eh
-   representar um calendario onde cada "pagina" representa um mes.
+   O membro mes_atual armazena o mes_atual da agenda (inteiro entre 1 e 12),
+   o membro ptr_mes_atual aponta para o mes corrente na Lista de meses, a ideia 
+   eh representar um calendario onde cada "pagina" representa um mes.
    Por simplificacao vamos assumir que todos os meses tem 31 dias. */
 
 typedef struct agenda {
@@ -105,8 +112,8 @@ void imprime_agenda_mes(agenda_t* agenda);
 /* Retorna o mes atual da agenda. */
 int mes_atual_agenda(agenda_t *agenda);
 
-/* Ajusta o mes_atual para 1; caso o mes esteja alocado, ptr_mes_atual
- * apontara para o mes 1, caso contrario para NULL. */
+/* Ajusta o mes_atual para 1 e aponta prt_mes_atual para o mes 1 na Lista de 
+ * meses  */
 void prim_mes_agenda(agenda_t* agenda);
 
 /* Avanca a agenda para o proximo mes, incrementando mes_atual.
@@ -123,8 +130,7 @@ int ant_mes_agenda(agenda_t* agenda);
    usando-se a funcao prox_compr. */ 
 compromisso_t* compr_agenda(agenda_t* agenda, int dia);
 
-/* Retorna o primeiro compromisso da lista de compromissos compr e avanca
- * para o prox. Retorna NULL se a lista esta vazia, ou seja, sem compromissos.*/
+/* Retorna o proximo compromisso da lista de compromissos compr.*/
 compromisso_t* prox_compr(compromisso_t* compr);
 
 /* As funcoes abaixo sao usadas para acessar os membros da struct compromisso
@@ -136,4 +142,3 @@ char* descricao_compr(compromisso_t* compr);
 /* Essa funcao nao eh extritamente necessaria, o objetivo e' que o programa
 principal apresente os dados. Porem pode ser util para voces durante o desenvolvimento */ 
 void imprime_agenda_mes(agenda_t* agenda);
-
