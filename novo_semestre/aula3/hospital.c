@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdiolib.h>
 #include <string.h>
 
 //string são vetores de caracteres.
@@ -22,18 +21,23 @@ typedef struct pacientes_t{
    char nome[50];
    short idade;
    float peso;
-   medicamento_t remedio[3];
+   medicamentos_t remedio[3];
 }pacientes_t;
 
-struct cadastrar_paciente(){
+int cadastrar_paciente(pacientes_t paciente, short a){
    
 
-   return cadastro;
+   return ;
 };
 
-void buscar_paciente(paciente__t paciente){
+int buscar_paciente(){
 
 };
+
+/*void lista_paciente(){
+   
+   for(i=0;i
+}*/
 
 /*EXEMPLO DADO EM AULA:	
 pacientes_t paciente;
@@ -42,25 +46,29 @@ paciente.idade = 23;
 paciente.peso = 85.7;*/
 
 int main(){
-   char saida = n;
-   paciente_t paciente;
-   short comando;
-
-   while(saida !=s){
-      printf("Digite 1 para cadastrar um paciente ou 2 para buscar ");
+   char saida = "n";)
+   pacientes_t paciente[15];
+   short comando, atual;
+   
+   atual = 0;
+   while(saida != "s"){
+      printf("Digite 1 para cadastrar um paciente ou 2 para busca-lo ");
       scanf("%d",&comando);
-      if (comando = 1){
-         
+
+      if (comando == 1){
+         paciente[atual] = ;
+         atual++;
       }
       else if (comando = 2)
          busca_paciente(paciente);
       else 
          printf("comando invalido");
-             
 
+                 
       printf("Digite 's' se quiser finalizar o programa ou qualquer outro caracter se quiser continuar");    
       scanf("%s",&saida);
    } 
-   imprime paciente(
+   lista_pacientes(paciente,atual);
    return 0;
 }
+
