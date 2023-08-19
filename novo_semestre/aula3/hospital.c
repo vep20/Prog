@@ -24,11 +24,19 @@ typedef struct pacientes_t{
    medicamentos_t remedio[3];
 }pacientes_t;
 
-int cadastrar_paciente(pacientes_t paciente, short a){
-   
+struct pacientes_t cadastrar_paciente(){
+   pacientes_t aux;
 
-   return ;
-};
+   printf("\nNome:\n");
+   fgets(aux.nome, sizeof(aux.nome),stdin);
+   printf("Idade:\n");
+   scanf("%hd", &aux.idade);
+   printf("Peso:\n");
+   scanf("%f", &aux.peso);
+   getchar();
+
+   return aux;
+}
 
 int buscar_paciente(){
 
@@ -46,29 +54,30 @@ paciente.idade = 23;
 paciente.peso = 85.7;*/
 
 int main(){
-   char saida = "n";)
+   char saida = "n";
    pacientes_t paciente[15];
-   short comando, atual;
+   short comando, atual = 0;
    
-   atual = 0;
    while(saida != "s"){
       printf("Digite 1 para cadastrar um paciente ou 2 para busca-lo ");
       scanf("%d",&comando);
 
-      if (comando == 1){
-         paciente[atual] = ;
+      if (comando == 1 && atual < 15){
+         paciente[atual] = cadastrar_paciente();
          atual++;
       }
-      else if (comando = 2)
+
+      /*else if (comando = 2)
          busca_paciente(paciente);
       else 
-         printf("comando invalido");
+         printf("comando invalido");*/
 
                  
       printf("Digite 's' se quiser finalizar o programa ou qualquer outro caracter se quiser continuar");    
       scanf("%s",&saida);
    } 
-   lista_pacientes(paciente,atual);
+   
+   //lista_pacientes(paciente,atual);
    return 0;
 }
 
