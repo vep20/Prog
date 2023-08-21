@@ -1,0 +1,12 @@
+//string são vetores de caracteres.
+//estudo de struct e como utliza-las em C
+//%s é utlizado para imprimir strings
+
+/*EXEMPLO DADO EM AULA:	
+pacientes_t paciente;
+strcpy(paciente.nome,"ana"); // para definir string sem necessidade de colocar um caracter por vez
+paciente.idade = 23;
+paciente.peso = 85.7;*/
+
+//fgets(aux.nome, sizeof(aux.nome),stdin);
+
