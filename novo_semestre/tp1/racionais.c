@@ -83,8 +83,9 @@ void imprime_r (struct racional r){
     else if(r.num == r.den)
         printf("1 ");
     else{
-        if ((r.num < 0 && r.den > 0) || (r.den < 0 && r.num > 0))
-            printf("%d/%d ", r.num, r.den);
+        if(r.den < 0) 
+        //((r.num < 0 && r.den > 0) || (r.den < 0 && r.num > 0))
+            printf("-%d/%d ", r.num, abs(r.den));
         else if(r.num < 0 && r.den < 0)
             printf("%d/%d ", abs(r.num), abs(r.den));
         else 
