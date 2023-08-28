@@ -15,14 +15,14 @@ int main (){
         printf("Digite um numero entre 0 e 100:");
         scanf("%d",&n);
         if (n < 0 || n > 100)
-            printf("Numero n fora do intervalo definido");
+            printf("Numero n fora do intervalo definido\n");
     }while(n < 0 || n > 100);
 
     do{
         printf("Digite outro numero entre 0 e 30:");
         scanf("%d",&max);
         if(max < 0 || max > 30)
-            printf("Maximo fora do intervalo definido");
+            printf("Maximo fora do intervalo definido\n");
     }while(max < 0 || max > 30); //Garantia de que os numeros lidos estão no intervalos pré determinados
        
 
