@@ -1,8 +1,8 @@
 #include <stido.h>
 
-typedef struct nodo_t{
+typedef struct nodo{
    int elemento;
-   nodo_t *prox;
+   struct nodo *prox;
 }nodo_t;
 
 int cria(nodo_t **novo, int elem){
@@ -37,3 +37,16 @@ int main(){
 
    return 0;
 }
+
+// criar lista
+// insere inicio
+// insere fim
+// remove inicio
+// remove fim
+// insere ordenado
+// remover ordenado
+// remove qualquer
+// ordenar
+// busca 
+// imprimir
+// vazia
