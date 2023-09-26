@@ -8,7 +8,7 @@ typedef struct nodo{
 int cria(nodo_t **novo, int elem){
    nodo_t *aux;
 
-   if((*nodo_t)/*para determinar que malloc retorne um nodo (em geral retorna void)*/ malloc(sizeof(nodo_t)) == NULL)
+   if(aux = (nodo_t*)/*para determinar que malloc retorne um nodo (em geral retorna void)*/ malloc(sizeof(nodo_t)) == NULL)
       return 0;
 
    aux->elemento = elem;
