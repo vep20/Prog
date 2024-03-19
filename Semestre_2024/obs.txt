@@ -4,4 +4,5 @@ Aula1 lab - Boas praticas de programação
 Aula2 lab - Estudo sobre tipos de arquivos para uso de programas em c: .c, .h e makefile
    Lançado o tp1 no moodle
 
+Ex compactar arquivo: tar zcvf tp1.tgz tp1 
 

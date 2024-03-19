@@ -12,7 +12,6 @@
  * aqui.
 */
 
-
 int aleat (int min, int max){
     int n_aleat;
 
@@ -47,13 +46,14 @@ struct racional simplifica_r (struct racional r){
     struct racional aux;
     int aux_mdc;
 
-    aux_mdc =  mdc(abs(r.num), abs(r.den));
-    /* Utiliza abs por causa da função de subtração*/
-    aux.num = r.num / aux_mdc;
+    /* Utilizado abs por causa da função de subtração*/
+    aux_mdc = mdc(abs(r.num),abs(r.den));
+    aux.num = r.num/ aux_mdc;
     aux.den = r.den / aux_mdc;
+    return aux;
 }
 
-/*função de teste*/
+/* função de teste*/
 struct racional cria_r (int numerador, int denominador){
     struct racional aux; 
 
@@ -85,10 +85,13 @@ void imprime_r (struct racional r){
 
     if (r.num == 0)
         printf("0 ");
+
     else if(r.den == 1)
         printf("%d ", r.num);
+
     else if(r.num == r.den)
         printf("1 ");
+
     else{
         if(r.den < 0) 
             printf("-%d/%d ", r.num, abs(r.den));
@@ -101,5 +104,64 @@ void imprime_r (struct racional r){
 
 int valido_r (struct racional r){
 
-    return ;
+    if (!r.den)
+        return 0;
+    return 1;
+}
+
+struct racional soma_r (struct racional r1, struct racional r2){
+    struct racional aux;
+    int aux_mmc;
+
+    if(r1.den == r2.den){
+        aux.num = r1.num + r2.num;
+        aux.den = r1.den;
+    }/* Para os casos que não são necesssarios chamar a função mmc*/
+
+    else{
+        aux_mmc = mmc(r1.den,r2.den);
+        aux.num = ((aux_mmc / r1.den * r1.num) + (aux_mmc / r2.den * r2.num));
+        aux.den = aux_mmc;
+    }
+
+    aux = simplifica_r(aux);
+    return aux;
+}
+
+struct racional subtrai_r (struct racional r1, struct racional r2){
+    struct racional aux;
+    int aux_mmc;
+ 
+    if(r1.den == r2.den){
+        aux.num = r1.num - r2.num;
+        aux.den = r1.den;
+    }/* Para os casos que não são necesssarios chamar a função mmc*/
+
+    else{
+        aux_mmc = mmc(r1.den,r2.den);
+        aux.num = ((aux_mmc / r1.den * r1.num) - (aux_mmc / r2.den * r2.num));
+        aux.den = aux_mmc;
+    }
+
+    aux = simplifica_r(aux);
+    return aux;
+}
+
+struct racional multiplica_r (struct racional r1, struct racional r2){
+    struct racional aux;
+
+    aux.num = r1.num * r2.num;
+    aux.den = r1.den * r2.den;
+    aux = simplifica_r(aux);
+    return aux; 
+}
+
+struct racional divide_r (struct racional r1, struct racional r2){
+    struct racional aux;
+    
+    aux.num = r1.num * r2.den;
+    aux.den = r1.den * r2.num;
+    aux.valido = valido_r(aux);
+    aux = simplifica_r(aux);
+    return(aux);    
 }
