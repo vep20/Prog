@@ -5,4 +5,9 @@ Aula2 lab - Estudo sobre tipos de arquivos para uso de programas em c: .c, .h e 
    Lançado o tp1 no moodle
 
 Ex compactar arquivo: tar zcvf tp1.tgz tp1 
+Compilar gcc -Wall -Werror -Wextra -pedantic fonte.c -o executavel
+
+Aula3 lab - Ponteiros e como utiliza-los
+   Revisar site do Mazieiro
+
 
