@@ -23,12 +23,12 @@ int mmc (int a, int b){
 /* coloque o codigo aqui */
 }
 
-/* Recebe um numero racional e o retorna simplifico.
+/* Recebe um numero racional e o retorna simplificado.
  * Por exemplo, ao receber 10/8 devera retornar 5/4.
  * Se ambos numerador e denominador forem negativos, devera retornar um positivo.
  * Se o denominador for negativo, o sinal deve migrar para o numerador.
  * Quem chama esta funcao deve garantir que o racional r eh valido */
-struct racional simplifica_r (struct racional r);
+void simplifica_r (struct racional *r);
 
 /* aqui voce pode definir mais funcoes internas, caso queira ou precise */
 
