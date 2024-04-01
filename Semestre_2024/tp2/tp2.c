@@ -42,13 +42,13 @@ int main (){
             /* Retorno de erro para o programa*/ 
         }
 
-        //soma = soma_r(r1,r2);
-        //sub = subtrai_r(r1,r2);
-        //mult = multiplica_r(r1,r2);
-        //div = divide_r(r1,r2);
+        soma_r(r1,r2,&soma);
+        subtrai_r(r1,r2,&sub);
+        multiplica_r(r1,r2,&mult);
+        divide_r(r1,r2,&div);
 
         if(!valido_r(div)){
-            printf("DIVISAO INVALIDO\n");
+            printf("DIVISAO INVALIDA\n");
             return 1;
             /* Retorno de erro para o programa*/ 
         }
