@@ -32,7 +32,7 @@ int main (){
         printf("%d: ",i);
         r1 = sorteia_r(max);
         r2 = sorteia_r(max);
-
+    
         imprime_r(r1);
         imprime_r(r2);
 

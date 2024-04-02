@@ -13,14 +13,17 @@ int aleat(int min, int max){
     int n_aleat; 
 
     /*Forma de gerar numeros aleatorios entre min e max includos eles mesmos*/
-    n_aleat = rand() % (max - min + 1) + min; 
+    n_aleat = min + rand() % (max - min + 1); 
     return n_aleat;
 }
+
 
 /* Maximo Divisor Comum entre a e b      */
 /* calcula o mdc pelo metodo de Euclides */
 /* dica: a versao recursiva eh bem elegante! */
 int mdc(int a, int b){
+    a = abs(a);
+    b = abs(b);
 
     if (!a)
         return b;
@@ -49,7 +52,7 @@ void simplifica_r(struct racional *r){
 
     /* Utilizado abs por causa da função de subtração*/
     aux_mdc = mdc(abs(r->num),abs(r->den));
-    r->num = r->num/ aux_mdc;
+    r->num = r->num / aux_mdc;
     r->den = r->den / aux_mdc;
 }
 
@@ -76,6 +79,11 @@ struct racional sorteia_r(int n){
 
     aux.num = aleat(-n,n);
     aux.den = aleat(-n,n);
+
+    while (aux.den == 0) {
+        aux.den = aleat(-n, n);
+    }
+
     simplifica_r(&aux);
     aux.valido = valido_r(aux);
     return aux;
@@ -175,7 +183,7 @@ void imprime_r(struct racional r){
         printf("INVALIDO ");
         return;
     }
-
+    
     if (r.num == 0)
         printf("0 ");
 
@@ -186,12 +194,11 @@ void imprime_r(struct racional r){
         printf("1 ");
 
     else{
-        if(r.den < 0) 
-            printf("-%d/%d ", r.num, abs(r.den));
+        if(r.num > 0 && r.den < 0) 
+            printf("-%d/%d ", abs(r.num), abs(r.den));
         else if(r.num < 0 && r.den < 0)
             printf("%d/%d ", abs(r.num), abs(r.den));
         else 
             printf("%d/%d ", r.num, r.den);
     }
 }
-
