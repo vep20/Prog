@@ -13,4 +13,3 @@ Aula3 lab - Ponteiros e como utiliza-los
 Aula4 lab - Apos tp1 e tp2 - 
    Estudo de vetores:
       Andar em um vetor: *(vet+0) *(vet+1) - para monstrar, inserir etc, no vetor, ou seja, desreferenciar o mesmo 
-
