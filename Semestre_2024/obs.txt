@@ -10,4 +10,6 @@ Compilar gcc -Wall -Werror -Wextra -pedantic fonte.c -o executavel
 Aula3 lab - Ponteiros e como utiliza-los
    Revisar site do Mazieiro
 
+Aula4 lab - Apos tp1 e tp2 - 
+   Estudo de vetores 
 

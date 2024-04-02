@@ -74,8 +74,8 @@ struct racional cria_r(int numerador, int denominador){
 struct racional sorteia_r(int n){
     struct racional aux;
 
-    aux.num = aleat(0,n);
-    aux.den = aleat(0,n);
+    aux.num = aleat(-n,n);
+    aux.den = aleat(-n,n);
     simplifica_r(&aux);
     aux.valido = valido_r(aux);
     return aux;
