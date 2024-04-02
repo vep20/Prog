@@ -24,6 +24,7 @@ int aleat(int min, int max){
 int mdc(int a, int b){
     a = abs(a);
     b = abs(b);
+    /* Valores sempre positivos, visto que há possibilidade de entrarem negativos*/
 
     if (!a)
         return b;
@@ -60,7 +61,6 @@ void simplifica_r(struct racional *r){
  * Implemente aqui as funcoes definidas no racionais.h.
 */
 
-
 /* Função de teste para o usuario*/
 struct racional cria_r(int numerador, int denominador){
     struct racional aux; 
@@ -79,10 +79,6 @@ struct racional sorteia_r(int n){
 
     aux.num = aleat(-n,n);
     aux.den = aleat(-n,n);
-
-    while (aux.den == 0) {
-        aux.den = aleat(-n, n);
-    }
 
     simplifica_r(&aux);
     aux.valido = valido_r(aux);
@@ -187,8 +183,8 @@ void imprime_r(struct racional r){
     if (r.num == 0)
         printf("0 ");
 
-    else if(r.den == 1)
-        printf("%d ", r.num);
+    else if(r.den == 1 || r.den == -1)
+        printf("%d ", r.num/r.den);
 
     else if(r.num == r.den)
         printf("1 ");
