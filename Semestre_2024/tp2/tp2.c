@@ -36,18 +36,17 @@ int main (){
         imprime_r(r1);
         imprime_r(r2);
 
-        if(!valido_r(r1) || !valido_r(r2)){
+        if(!r1.valido || !r2.valido){
             printf("NUMERO INVALIDO\n");
             return 1;
             /* Retorno de erro para o programa*/ 
         }
-
+        
         soma_r(r1,r2,&soma);
         subtrai_r(r1,r2,&sub);
         multiplica_r(r1,r2,&mult);
-        divide_r(r1,r2,&div);
-
-        if(!valido_r(div)){
+        
+        if(!divide_r(r1,r2,&div)){
             printf("DIVISAO INVALIDA\n");
             return 1;
             /* Retorno de erro para o programa*/ 

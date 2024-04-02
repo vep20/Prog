@@ -9,7 +9,7 @@
  * embora elas nao precisem estar no .h */
 
 /* retorna um numero aleatorio entre min e max, inclusive. */
-int aleat (int min, int max){
+int aleat(int min, int max){
     int n_aleat; 
 
     /*Forma de gerar numeros aleatorios entre min e max includos eles mesmos*/
@@ -20,7 +20,7 @@ int aleat (int min, int max){
 /* Maximo Divisor Comum entre a e b      */
 /* calcula o mdc pelo metodo de Euclides */
 /* dica: a versao recursiva eh bem elegante! */
-int mdc (int a, int b){
+int mdc(int a, int b){
 
     if (!a)
         return b;
@@ -34,7 +34,7 @@ int mdc (int a, int b){
 
 /* Minimo Multiplo Comum entre a e b */
 /* mmc = (a * b) / mdc (a, b)        */
-int mmc (int a, int b){
+int mmc(int a, int b){
 
     return (a * b) / mdc (a, b);
 }
@@ -44,7 +44,7 @@ int mmc (int a, int b){
  * Se ambos numerador e denominador forem negativos, devera retornar um positivo.
  * Se o denominador for negativo, o sinal deve migrar para o numerador.
  * Quem chama esta funcao deve garantir que o racional r eh valido */
-void simplifica_r (struct racional *r){
+void simplifica_r(struct racional *r){
     int aux_mdc;
 
     /* Utilizado abs por causa da função de subtração*/
@@ -59,7 +59,7 @@ void simplifica_r (struct racional *r){
 
 
 /* Função de teste para o usuario*/
-struct racional cria_r (int numerador, int denominador){
+struct racional cria_r(int numerador, int denominador){
     struct racional aux; 
 
     aux.num = numerador;
@@ -67,17 +67,17 @@ struct racional cria_r (int numerador, int denominador){
     simplifica_r(&aux);
     /* Validação deve ocorrer pos a simplificação,
      * pois na main (teste) já se define a validade do num e den*/
-    aux.valido = valido_r (aux);
+    aux.valido = valido_r(aux);
     return aux;
 }
 
-struct racional sorteia_r (int n){
+struct racional sorteia_r(int n){
     struct racional aux;
 
     aux.num = aleat(0,n);
     aux.den = aleat(0,n);
     simplifica_r(&aux);
-    aux.valido = valido_r (aux);
+    aux.valido = valido_r(aux);
     return aux;
 }
 
@@ -112,6 +112,7 @@ void soma_r(struct racional r1, struct racional r2, struct racional *r3){
         r3->den = aux_mmc;
     }
 
+    r3->valido = 1;
     simplifica_r(r3);
 }
 
@@ -129,6 +130,7 @@ void subtrai_r(struct racional r1, struct racional r2, struct racional *r3){
         r3->den = aux_mmc;
     }
 
+    r3->valido = 1;
     simplifica_r(r3);
 }
 
@@ -136,16 +138,23 @@ void multiplica_r(struct racional r1, struct racional r2, struct racional *r3){
 
     r3->num = r1.num * r2.num;
     r3->den = r1.den * r2.den;
+    r3->valido = 1;
     simplifica_r(r3);
 }
 
 int divide_r(struct racional r1, struct racional r2, struct racional *r3){
     
+    if (!r2.num){
+        r3->valido = 0;
+        return 0;
+    }
+
     r3->num = r1.num * r2.den;
     r3->den = r1.den * r2.num;
+    r3->valido = 1;
 
     simplifica_r(r3);
-    return 0;   
+    return 1;   
 }
 
 int compara_r(struct racional r1, struct racional r2){
@@ -160,7 +169,7 @@ int compara_r(struct racional r1, struct racional r2){
     return 1;
 }
 
-void imprime_r (struct racional r){
+void imprime_r(struct racional r){
 
     if(!valido_r(r)){
         printf("INVALIDO ");
