@@ -16,7 +16,7 @@ Aula4 lab - Apos tp1 e tp2 -
 
 Aula5 lab - Alocação de memória em C 
    Alocação estativa = variaveis globais estaticas, geralmente usua a área Data;
-      ''    automatica;
+      ''    automatica = pega o tamanho na pilha;
    malloc, instruçoes: deve sempre se usar a biblioteca stdlib.h. Exemplo de uso
    int main(){
       int *p; //Declara um ponteiro de inteiro
@@ -57,4 +57,6 @@ Aula5 lab - Alocação de memória em C
       return 0;      
    }
 
-   *vet[tam]; //vetor de ponteiros;
+   *vet[tam]; //vetor de ponteiros; 
+
+   obs: malloc pega memoria na heap;
