@@ -60,3 +60,8 @@ Aula5 lab - Alocação de memória em C
    *vet[tam]; //vetor de ponteiros; 
 
    obs: malloc pega memoria na heap;
+
+   Para o tp3 sera necessario mallocar struct, sendo assim, em exeplemplo:
+   {struct ponto *p[10];
+
+   p[i] = cria_r;}
