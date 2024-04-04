@@ -12,4 +12,49 @@ Aula3 lab - Ponteiros e como utiliza-los
 
 Aula4 lab - Apos tp1 e tp2 - 
    Estudo de vetores:
-      Andar em um vetor: *(vet+0) *(vet+1) - para monstrar, inserir etc, no vetor, ou seja, desreferenciar o mesmo 
+      Andar em um vetor: *(vet+0) *(vet+1) - para monstrar, inserir etc, no vetor, ou seja, desreferenciar o mesmo   
+
+Aula5 lab - Alocação de memória em C 
+   Alocação estativa = variaveis globais estaticas, geralmente usua a área Data;
+      ''    automatica;
+   malloc, instruçoes: deve sempre se usar a biblioteca stdlib.h. Exemplo de uso
+   int main(){
+      int *p; //Declara um ponteiro de inteiro
+    
+      p = malloc (sizeof(int)); //Aloca o espaço de um inteiro, sizeof especifica o espaço disponivel para o tipo de variavel solicitada
+      *p = 10;
+
+      printf("Endereço dee p = %p e valor de p = %d", p, *p);
+      free (p); // libera a p endereço alocado pos final do programa, ou seja deixa a região de memoria disponivel novamente;
+      return 0;
+   }
+   obs: nunca usar novamente a variavel se der um free na mesma 
+   tambem para garantir que o ponteiros não irá ser usado pos o free, se usa: p = NULL;
+
+   realloc - Define um novo tamanho necerrario para variaveis, ex: possui um vetor tamanho n e no meio do programa precisa que ele seja 
+   n + 1;
+
+   Em vetores podemos declar em alocação dinamica.
+   Ex:
+
+   int main(){
+      int *vet;
+      int tam, x;
+
+      scanf("%d", &tam);
+      vet = malloc(sizeof(int) * tam * 1024);
+
+      if (!vet){//Testando se há espaço na memoria para o malloc pre definido
+         
+         fprint(stderr, "deu erro\n");\\ força o pŕograma a retornar mensagem de erro antes de morrer
+         exit (1);
+      }
+
+      for (x = 0; x < tam*1024; x++)
+         *(vet+x) = x * 2;
+
+      free(vet);
+      return 0;      
+   }
+
+   *vet[tam]; //vetor de ponteiros;
