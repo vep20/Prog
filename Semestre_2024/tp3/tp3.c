@@ -11,7 +11,7 @@
 
 int main (){
     int n, max;
-    
+
     /* vetor de ponteiros para racionais */
     struct racional **v;  /* equivalente a struct racional *v[] */
     srand(0);
@@ -32,7 +32,7 @@ int main (){
     /* Garantia de que os numeros lidos estão no intervalos pré determinados*/
        
 
-    for(int i = 1; i <= n; i++){
+    /*for(int i = 1; i <= n; i++){
         printf("%d: ",i);
         r1 = sorteia_r(max);
         r2 = sorteia_r(max);
@@ -43,8 +43,8 @@ int main (){
         if(!r1.valido || !r2.valido){
             printf("NUMERO INVALIDO\n");
             return 1;
-            /* Retorno de erro para o programa*/ 
-        }
+           /* Retorno de erro para o programa*/ 
+        /*}
         
         soma_r(r1,r2,&soma);
         subtrai_r(r1,r2,&sub);
@@ -53,15 +53,15 @@ int main (){
         if(!divide_r(r1,r2,&div)){
             printf("DIVISAO INVALIDA\n");
             return 1;
-            /* Retorno de erro para o programa*/ 
-        }
+           /* Retorno de erro para o programa*/ 
+        /*}
 
         imprime_r(soma);
         imprime_r(sub);
         imprime_r(mult);
         imprime_r(div);
         printf("\n");
-    }
+    }*/
     
     return 0;
-}
+} 

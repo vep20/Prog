@@ -65,3 +65,7 @@ Aula5 lab - Alocação de memória em C
    {struct ponto *p[10];
 
    p[i] = cria_r;}
+
+   para o trabalho: void aloca_vetor (int *v, int tam){
+      v = malloc (sizeof(int) * tam);
+   }
