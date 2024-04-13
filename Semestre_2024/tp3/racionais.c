@@ -58,6 +58,130 @@ void simplifica_r (struct racional *r){
 
 /* Implemente aqui as funcoes cujos prototipos estao em racionais.h */
 
+struct racional *cria_r (long int numerador, long int denominador){
+    struct racional *aux;
+
+    aux = malloc(sizeof(struct racional));
+    if(!(aux))
+        return NULL;
+    aux->num = numerador;
+    aux->den = denominador;
+    simplifica_r(aux);
+    /* Validação deve ocorrer ápos a simplificação,
+     * pois na main (teste) já se define a validade do num e den*/
+    return aux;
+}
+
+struct racional *sorteia_r (long int max){
+    struct racional *aux;
+
+    aux = malloc(sizeof(struct racional));
+    if(!(aux))
+        return NULL;
+    aux->num = aleat(-max,max);
+    aux->den = aleat(-max,max);
+    simplifica_r(&aux);
+    return aux;
+}
+
+void destroi_r (struct racional **r){
+
+    free(*r);
+    *r = NULL;
+}
+
+long int numerador_r (struct racional *r){
+
+    return r->num;
+}
+
+long int denominador_r (struct racional *r){
+
+    return r->den;
+}
+
+int valido_r (struct racional *r){
+
+    if (!r->den)
+        return 0;
+    return 1;
+}
+
+struct racional *soma_r (struct racional *r1, struct racional *r2){
+    struct racional *aux;
+    int aux_mmc;
+
+    aux = malloc(sizeof(struct racional));
+    if(!(aux))
+        return NULL;
+
+    if(r1->den == r2->den){
+        aux->num = r1->num + r2->num;
+        aux->den = r1->den;
+    }/* Para os casos que não são necesssarios chamar a função mmc*/
+
+    else{
+        aux_mmc = mmc(r1->den,r2->den);
+        aux->num = ((aux_mmc / r1->den * r1->num) + (aux_mmc / r2->den * r2->num));
+        aux->den = aux_mmc;
+    }
+
+    simplifica_r(aux);
+    return aux; 
+}
+
+struct racional *subtrai_r (struct racional *r1, struct racional *r2){
+    struct racional *aux;
+    int aux_mmc;
+
+    aux = malloc(sizeof(struct racional));
+    if(!(aux))
+        return NULL;    
+
+    if(r1->den == r2->den){
+        aux->num = r1->num - r2->num;
+        aux->den = r1->den;
+    }/* Para os casos que não são necesssarios chamar a função mmc*/
+
+    else{
+        aux_mmc = mmc(r1->den,r2->den);
+        aux->num = ((aux_mmc / r1->den * r1->num) - (aux_mmc / r2->den * r2->num));
+        aux->den = aux_mmc;
+    }
+
+    simplifica_r(aux);
+    return aux; 
+}
+
+struct racional *multiplica_r (struct racional *r1, struct racional *r2){
+    struct racional *aux;
+
+    aux = malloc(sizeof(struct racional));
+    if(!(aux))
+        return NULL;
+
+    aux->num = r1->num * r2->num;
+    aux->den = r1->den * r2->den;
+    simplifica_r(aux);
+    return aux;
+}
+
+struct racional *divide_r (struct racional *r1, struct racional *r2){
+    struct racional *aux;
+
+    aux = malloc(sizeof(struct racional));
+    if(!(aux))
+        return NULL;
+    
+    if (!r2->num)
+        return 0;
+
+    aux->num = r1->num * r2->den;
+    aux->den = r1->den * r2->num;
+    simplifica_r(aux);
+    return aux;   
+}
+
 int compara_r (struct racional *r1, struct racional *r2){
     float valor_dec1, valor_dec2;
 
