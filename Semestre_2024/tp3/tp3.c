@@ -9,8 +9,17 @@
 /* coloque funcoes desejadas aqui. 
  * Exemplo: ordenar, eliminar invalidos... */
 
+void cria_vetor (struct racional *v[], int tam){
+    int aux_num, aux_den;
+
+      for (int i = 0; i < tam; i++){
+        scanf("%d %d", &aux_num, &aux_den);
+        v[i] = cria_r(aux_num,aux_den);
+    }
+}
+
 int main (){
-    int n, max;
+    int n, max, num, den;
 
     /* vetor de ponteiros para racionais */
     struct racional **v;  /* equivalente a struct racional *v[] */
@@ -31,8 +40,12 @@ int main (){
     }while(max < 0 || max > 30); 
     /* Garantia de que os numeros lidos estão no intervalos pré determinados*/
        
+    cria_vetor(v,n);
+    
+    return 0;
+} 
 
-    /*for(int i = 1; i <= n; i++){
+ /*for(int i = 1; i <= n; i++){
         printf("%d: ",i);
         r1 = sorteia_r(max);
         r2 = sorteia_r(max);
@@ -62,6 +75,3 @@ int main (){
         imprime_r(div);
         printf("\n");
     }*/
-    
-    return 0;
-} 
