@@ -64,6 +64,8 @@ struct racional *cria_r (long int numerador, long int denominador){
     aux = malloc(sizeof(struct racional));
     if(!(aux))
         return NULL;
+    /* Teste de alocação, usado nestas e demais funções da biblioteca*/
+    
     aux->num = numerador;
     aux->den = denominador;
     simplifica_r(aux);
@@ -78,9 +80,10 @@ struct racional *sorteia_r (long int max){
     aux = malloc(sizeof(struct racional));
     if(!(aux))
         return NULL;
+
     aux->num = aleat(-max,max);
     aux->den = aleat(-max,max);
-    simplifica_r(&aux);
+    simplifica_r(aux);
     return aux;
 }
 
@@ -185,6 +188,10 @@ struct racional *divide_r (struct racional *r1, struct racional *r2){
 int compara_r (struct racional *r1, struct racional *r2){
     float valor_dec1, valor_dec2;
 
+    if (r1->den == 0 || r2->den == 0) 
+        /*Se o denominador de qualquer um dos racionais for zero, eles são considerados iguais*/    
+        return 0;
+
     valor_dec1 = r1->num / r1->den;
     valor_dec2 = r2->num / r2->den;
     if (valor_dec1 < valor_dec2)
@@ -205,7 +212,7 @@ void imprime_r (struct racional *r){
         printf("0 ");
 
     else if(r->den == 1 || r->den == -1)
-        printf("%d ", r->num/r->den);
+        printf("%ld ", r->num/r->den);
 
     else if(r->num == r->den)
         printf("1 ");
@@ -216,6 +223,6 @@ void imprime_r (struct racional *r){
         else if(r->num < 0 && r->den < 0)
             printf("%d/%d ", abs(r->num), abs(r->den));
         else 
-            printf("%d/%d ", r->num, r->den);
+            printf("%ld/%ld ", r->num, r->den);
     }
 }

@@ -12,14 +12,66 @@
 void cria_vetor (struct racional *v[], int tam){
     int aux_num, aux_den;
 
-      for (int i = 0; i < tam; i++){
+    for (int i = 0; i < tam; i++){
         scanf("%d %d", &aux_num, &aux_den);
         v[i] = cria_r(aux_num,aux_den);
     }
 }
 
+void imprime_vetor(struct racional *v[], int tam){
+
+    for(int i = 0; i < tam; i++)
+        imprime_r(v[i]);
+    printf("\n");        
+}
+
+void redimenciona_vetor(struct racional *v[], int inicio, int *tam){
+
+    for (int i = inicio; i < *tam - 1; i++)
+        v[i] = v[i+1];
+
+}
+
+void elimina_invalidos(struct racional *v[], int *tam){
+    for(int i = 0; i < *tam; i++){
+        if (!valido_r(v[i])){
+            redimenciona_vetor(v, i, tam); // Corrigindo para passar o valor real de tam
+            v[*tam] = NULL;
+            (*tam)--;
+            i--;
+        } 
+    }
+}
+
+
+void troca(struct racional *r1, struct racional *r2){
+    struct racional aux;
+
+    aux = *r1;
+    *r1 = *r2;
+    *r2 = aux;
+}
+
+void ordena_vetor(struct racional *v[], int tam){
+
+    for(int i = 0; i < tam; i++){
+        for (int j = i+1; j < tam; j++){
+            if (compara_r(v[j],v[j+1]))
+                troca(v[j],v[j+1]);
+        }
+    }   
+}
+
+void destroi_vetor(struct racional *v[], int tam){
+
+    for(int i = 0; i < tam; i++){
+        free(v[i]);
+        v[i] = NULL;
+    }
+}
+
 int main (){
-    int n, max, num, den;
+    int n   ;
 
     /* vetor de ponteiros para racionais */
     struct racional **v;  /* equivalente a struct racional *v[] */
@@ -32,46 +84,18 @@ int main (){
             printf("Numero n fora do intervalo definido\n");
     }while(n < 0 || n > 100);
 
-    do{
-        printf("Digite outro numero entre 0 e 30:");
-        scanf("%d",&max);
-        if(max < 0 || max > 30)
-            printf("Maximo fora do intervalo definido\n");
-    }while(max < 0 || max > 30); 
-    /* Garantia de que os numeros lidos estão no intervalos pré determinados*/
-       
+    v = malloc(sizeof (struct racional *) * n);
+    if (v == NULL)
+        return 1;
+
     cria_vetor(v,n);
-    
+    imprime_vetor(v,n);
+    elimina_invalidos(v,&n);
+    imprime_vetor(v,n);
+    ordena_vetor(v,n);
+    imprime_vetor(v,n);
+    destroi_vetor(v,n);
+
+    destroi_r(v);    
     return 0;
 } 
-
- /*for(int i = 1; i <= n; i++){
-        printf("%d: ",i);
-        r1 = sorteia_r(max);
-        r2 = sorteia_r(max);
-    
-        imprime_r(r1);
-        imprime_r(r2);
-
-        if(!r1.valido || !r2.valido){
-            printf("NUMERO INVALIDO\n");
-            return 1;
-           /* Retorno de erro para o programa*/ 
-        /*}
-        
-        soma_r(r1,r2,&soma);
-        subtrai_r(r1,r2,&sub);
-        multiplica_r(r1,r2,&mult);
-        
-        if(!divide_r(r1,r2,&div)){
-            printf("DIVISAO INVALIDA\n");
-            return 1;
-           /* Retorno de erro para o programa*/ 
-        /*}
-
-        imprime_r(soma);
-        imprime_r(sub);
-        imprime_r(mult);
-        imprime_r(div);
-        printf("\n");
-    }*/
