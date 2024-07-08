@@ -8,7 +8,8 @@
  * Voce deve implementa-las pois serao necessarias,
  * embora elas nao precisem estar no .h */
 
-/* retorna um numero aleatorio entre min e max, inclusive. */
+/* retorna um numer
+ o aleatorio entre min e max, inclusive. */
 int aleat (long int min, long int max){
     int n_aleat; 
 
@@ -71,7 +72,7 @@ struct racional *cria_r (long int numerador, long int denominador){
     simplifica_r(aux);
     /* Validação deve ocorrer ápos a simplificação,
      * pois na main (teste) já se define a validade do num e den*/
-    return aux;
+    return aux; 
 }
 
 struct racional *sorteia_r (long int max){
@@ -192,8 +193,9 @@ int compara_r (struct racional *r1, struct racional *r2){
         /*Se o denominador de qualquer um dos racionais for zero, eles são considerados iguais*/    
         return 0;
 
-    valor_dec1 = r1->num / r1->den;
-    valor_dec2 = r2->num / r2->den;
+    valor_dec1 = (float)r1->num / (float)r1->den;
+    valor_dec2 = (float)r2->num / (float)r2->den;
+    
     if (valor_dec1 < valor_dec2)
         return -1;
     else if (valor_dec1 == valor_dec2)
