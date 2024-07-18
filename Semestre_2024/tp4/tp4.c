@@ -7,7 +7,7 @@
 #include "lista.h"
 #define MAX 5
 
-/*void imprimir_lista (struct lista *l){
+void imprimir_lista (struct lista *l){
     int chave;
 
     if (lista_vazia (l)){
@@ -16,35 +16,33 @@
     }
 
     lista_inicia_iterador (l);
+    lista_incrementa_iterador (l,&chave);
+    printf ("%d", chave);
     while (lista_incrementa_iterador (l, &chave))
-        printf ("%d ", chave);
-    printf ("%d\n", chave);
-}*/
+        printf (" %d", chave);
+    printf("\n");
+}
 
-struct lista *teste_criar_lista ()
-{
+struct lista *teste_criar_lista (){
     struct lista *l;
 
-    if (! (l = lista_cria ()))
+    if (!(l = lista_cria ()))
         fprintf (stderr, "Falha na alocacao da lista\n");
 
     return l;
 }
 
-void teste_lista_vazia (struct lista *l)
-{
+void teste_lista_vazia (struct lista *l){
     if (lista_vazia (l))
         printf ("lista esta vazia");
     else
         printf ("lista nao esta vazia");
 }
 
-/*void teste_insere_inicio (struct lista *l, int limite)
-{
+void teste_insere_inicio (struct lista *l, int limite){
     int i;
 
-    for (i=1; i <= limite; i++)
-    {
+    for (i=1; i <= limite; i++){
         if (! lista_insere_inicio (l, i + 10)){
             printf ("Lista cheia, nao inseriu.\n");
             return;
@@ -53,12 +51,10 @@ void teste_lista_vazia (struct lista *l)
     }
 }
 
-void teste_insere_fim (struct lista *l, int limite)
-{
+void teste_insere_fim (struct lista *l, int limite){
     int i;
 
-    for (i=1; i <= limite; i++)
-    {
+    for (i=1; i <= limite; i++){
         if (! lista_insere_fim (l, i + 10)){
             printf ("Lista cheia, nao inseriu.\n");
             return;
@@ -67,28 +63,25 @@ void teste_insere_fim (struct lista *l, int limite)
     }
 }
 
-void teste_remove_inicio (struct lista *l)
-{
-    int chave;*/
+void teste_remove_inicio (struct lista *l){
+    int chave;
 
     /* remove todo mundo */
-   /* while (! lista_vazia (l))
+    while (! lista_vazia (l))
         if (lista_remove_inicio (l, &chave))
             imprimir_lista (l);
 }
 
-void teste_remove_fim (struct lista *l)
-{
-    int chave;*/
+void teste_remove_fim (struct lista *l){
+    int chave;
 
     /* remove todo mundo */
-   /* while (! lista_vazia (l))
+   while (! lista_vazia (l))
         if (lista_remove_fim (l, &chave))
             imprimir_lista (l);
 }
 
-void teste_insere_ordenado (struct lista *l)
-{
+void teste_insere_ordenado (struct lista *l){
     lista_insere_ordenado (l, 13); imprimir_lista (l);
     lista_insere_ordenado (l, 15); imprimir_lista (l);
     lista_insere_ordenado (l, 11); imprimir_lista (l);
@@ -96,9 +89,7 @@ void teste_insere_ordenado (struct lista *l)
     lista_insere_ordenado (l, 14); imprimir_lista (l);
 }
 
-
-void teste_remove_ordenado (struct lista *l)
-{
+void teste_remove_ordenado (struct lista *l){
     lista_remove_ordenado (l, 13); imprimir_lista (l);
     lista_remove_ordenado (l, 15); imprimir_lista (l);
     lista_remove_ordenado (l, 11); imprimir_lista (l);
@@ -106,8 +97,7 @@ void teste_remove_ordenado (struct lista *l)
     lista_remove_ordenado (l, 14); imprimir_lista (l);
 }
 
-void teste_de_pertinencia (struct lista *l)
-{
+void teste_de_pertinencia (struct lista *l){
     lista_insere_inicio (l, 13);
     lista_insere_inicio (l, 15);
     lista_insere_inicio (l, 11);
@@ -121,7 +111,7 @@ void teste_de_pertinencia (struct lista *l)
     if (lista_pertence (l, 15)) printf ("15 pertence\n");
     if (! lista_pertence (l, 10)) printf ("10 nao pertence\n");
     if (! lista_pertence (l, 16)) printf ("16 nao pertence\n");
-}*/
+}
 
 int main (void)
 {
@@ -140,7 +130,6 @@ int main (void)
         printf ("\tOK: remover da lista vazia nao deu segfault.\n");
     printf ("\n\n");
     
-    /*
     printf ("Teste 3: inserir 5 elementos no inicio:\n");
     printf ("Esperado: tem que imprimir a lista 5 vezes, a cada vez com o maior elemento no inicio. \n");
     printf ("\nATENCAO: se nao imprimir a lista corretamente o erro pode estar:\n");
@@ -197,8 +186,6 @@ int main (void)
     l = lista_cria ();
     lista_destroi (&l);
     printf ("\n\n");
-
-    */
 
     return 0;
 }

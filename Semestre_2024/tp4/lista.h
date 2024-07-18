@@ -22,7 +22,6 @@ struct lista {
     struct nodo *ini;
     struct nodo *ptr; /* ponteiro para algum nodo da lista (iterador) */
     int tamanho;
-
 };
 
 /*
