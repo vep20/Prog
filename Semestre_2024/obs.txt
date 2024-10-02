@@ -71,12 +71,6 @@ Aula5 lab - Alocação de memória em C
    }
 
 
-
-
-
-
-   
-
     /*for(int i = 1; i <= n; i++){
         printf("%d: ",i);
         r1 = sorteia_r(max);
@@ -107,3 +101,59 @@ Aula5 lab - Alocação de memória em C
         imprime_r(div);
         printf("\n");
     }*/
+
+-------------------------------------------------------------------------------------------------------
+Aulas Maziero
+
+
+-03/09 - Aula 01:
+Apresentação da disciplina
+Introdução à Linguagem C
+
+-05/09 - Aula 02:
+Controle de fluxo
+Tipos de dados
+Operadores
+Entrada e saída padrão
+Edição e compilação C em UNIX
+Lista de exercícios 1 (para 10/9)
+
+-12/09 - Aula 4 
+Vetores                                   
+- função memcpy (vb,va,tam*sizeof(int)); - sizeof(int) = 4 bytes - esta na biblioteca string.h
+                 destino, origem e quantos bytes devem ser copiados;                
+
+
+17/09 - Aula 05:
+Funções (passagem de parâmetros por valor)
+Estruturas.
+   OBS no preenchimento de structs: 
+       
+      struct paciente_t
+      {
+      char  nome[100] ;
+      short idade ;
+      short quarto ;
+      } ;
+   
+      struct paciente_t p = {"nulo", 0, 0} 
+
+   return(x > 0 ?  1 :  )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,19 +1,14 @@
-/* 
- * Tipos Abstratos de Dados - TADs
- * Arquivo do programa principal, que usa o TAD racional.
- * Feito em 16/09/2024 para a disciplina CI1001 - Programação 1.
-*/
+/* Arquivo MAIN que usa o TAD racionais */
 
-/* coloque aqui seus includes (primeiro os <...>, depois os "...") */
+/* coloque seus includes aqui */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "racional.h"
+#include "racionais.h"
 
-/* programa principal */
 int main (){
-
-    srand (0); /* use assim, com zero */
+    srand(4);
     int n, max;
     struct racional r1, r2, soma, sub, mult, div;
     
@@ -35,14 +30,13 @@ int main (){
 
     for(int i = 1; i <= n; i++){
         printf("%d: ",i);
-        r1 = sorteia_r(-max,max);
-        r2 = sorteia_r(-max,max);
+        r1 = sorteia_r(max);
+        r2 = sorteia_r(max);
 
         imprime_r(r1);
         imprime_r(r2);
 
         if(!valido_r(r1) || !valido_r(r2)){
-        
             printf("NUMERO INVALIDO\n");
             return 1;
             /* Retorno de erro para o programa*/ 
@@ -54,7 +48,7 @@ int main (){
         div = divide_r(r1,r2);
 
         if(!valido_r(div)){
-            printf("DIVISAO INVALIDA\n");
+            printf("DIVISAO INVALIDO\n");
             return 1;
             /* Retorno de erro para o programa*/ 
         }
