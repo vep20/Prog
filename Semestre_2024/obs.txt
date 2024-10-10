@@ -104,7 +104,7 @@ Aula5 lab - Alocação de memória em C
 
 -------------------------------------------------------------------------------------------------------
 Aulas Maziero
-
+   
 
 -03/09 - Aula 01:
 Apresentação da disciplina
@@ -129,11 +129,10 @@ Funções (passagem de parâmetros por valor)
 Estruturas.
    OBS no preenchimento de structs: 
        
-      struct paciente_t
-      {
-      char  nome[100] ;
-      short idade ;
-      short quarto ;
+      struct paciente_t{
+         char  nome[100] ;
+         short idade ;
+         short quarto ;
       } ;
    
       struct paciente_t p = {"nulo", 0, 0} 
