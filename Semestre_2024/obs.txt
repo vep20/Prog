@@ -132,7 +132,7 @@ Estruturas.
       struct paciente_t{
          char  nome[100] ;
          short idade ;
-         short quarto ;
+            short quarto ;
       } ;
    
       struct paciente_t p = {"nulo", 0, 0} 

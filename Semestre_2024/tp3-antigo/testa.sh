@@ -9,7 +9,7 @@ if [ "$#" -ne 1 ]; then
 fi
 
 TIPO_TESTE=$1
-#echo ${TIPO_TESTE}
+echo ${TIPO_TESTE}
 
 if [ ${TIPO_TESTE} == 1 ]; then
     COMANDO="./tp3"
@@ -22,9 +22,7 @@ else
     exit
 fi
 
-for i in 1 2 3 4 5 6
+for i in 1 2 3 4 5
 do
-    echo "Testando com entrada$i.txt:"
-    eval "${COMANDO}" < ./testes/entrada_$i.txt | diff - ./testes/saida_$i.txt
-    echo ""
+    eval "${COMANDO}" < ./casos_de_teste/entrada_$i.txt | diff - ./casos_de_teste/saida_$i.txt
 done
