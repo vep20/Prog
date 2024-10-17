@@ -31,7 +31,7 @@ void imprime_vetor(struct racional *v[], int tam){
   printf("\n");
 }
 
-void redimenciona_vetor(struct racional *v[], int inicio, int *tam){
+void redimensiona(struct racional *v[], int inicio, int *tam){
 
   for (int i = inicio; i < (*tam - 1); i++)
     v[i] = v[i + 1];
@@ -43,7 +43,7 @@ void elimina_invalidos(struct racional *v[], int *tam){
   for (int i = 0; i < *tam; i++){
     if (!valido_r(v[i])){
       free(v[i]);
-      redimenciona_vetor(v, i, tam); /* Corrigindo para passar o valor real de tam */
+      redimensiona(v, i, tam); /* Corrigindo para passar o valor real de tam */
       (*tam)--;
       i--; /* Ajustar  o indice */
     }
