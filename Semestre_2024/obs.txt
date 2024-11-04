@@ -140,9 +140,19 @@ Estruturas.
    return(x > 0 ?  1 :  )
 
 
+24/10 - 
 
+   Implementação de uma fila, importante ler wiki;
+   Para implemntar a aritmedica modular, usa-se % 
+   ex: livre ++ % (capacidade do vetor), ou seja, fila->livre = (f->livre +1) % f->cap;
+      f->dados = (f->dados +  1) % f->cap;
+      em print (f->vet)
 
+31/10 - 
 
+não realizar free dos items no proximo trabalha somente dos nodos
+mesmo um ponteiro sendo void, é possivel comparar ele com outro. Não pode realizar ++ e desreferenciar
+o mesmo. 
 
 
 
