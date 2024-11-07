@@ -24,12 +24,16 @@ struct fprio_t *fprio_cria (){
 
 struct fprio_t *fprio_destroi (struct fprio_t *f){
     int aux_tipo, aux_prio;
+    void *item;
 
     if (!f)
         return NULL;
 
-    while (f->prim) /*percorre e retira da fila até a mesma estar vazia*/ 
-        fprio_retira(f, &aux_tipo, &aux_prio);
+    while (f->prim){ /*percorre e retira da fila até a mesma estar vazia*/ 
+        item = fprio_retira(f, &aux_tipo, &aux_prio);
+        free(item);
+    }
+
      
     free(f);
     return NULL; 

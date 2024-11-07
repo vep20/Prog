@@ -155,7 +155,7 @@ mesmo um ponteiro sendo void, é possivel comparar ele com outro. Não pode real
 o mesmo. 
 
 
-05/10 -
+05/11 -
 
    struct cjto_t{
       bool flag[]; - 1 byte 
@@ -167,8 +167,22 @@ flag[i] = true sse i e C;
 pesquisar sobre bitmap - vetor de flag informando se i pertence; 
 nas maquinas que usamos, utilizamos firesystem, toda area há um bitmap informando qual espaço esta disponivel
 
+07/11 - 
+   informações sobre the boys:
+   Dica de alg de implementação de conjuntos de herois(base), ordenar por distancia das missões;
+   Sempre testar se heroi esta morto;
+   
+   mundo.h 
+      base
+      heroi 
+      vetor de ponteitos, alocamento dinamico missão - tentativa 
+   
+   como criar um herois e destruir
 
+   prio da f.prio = tempo crescente 
 
+   verificar arquivo de saida a partir da linha 330
+   
 
 
 

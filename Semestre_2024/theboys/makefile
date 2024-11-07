@@ -1,37 +1,47 @@
-# Makefile de exemplo (Manual do GNU Make)
-     
-CFLAGS = -Wall -Werror -Wextra -std=c90 -g  # flags de compilacao
-LDFLAGS = -lm
-ENTREGA = theboys-entrega
+# makefile The Boys
+# Carlos Maziero - DINF/UFPR, 2024/2
 
-CC = gcc
+CC      = gcc
+CFLAGS  = -Wall -Wextra -Werror -g -std=c99
+LDLIBS  = -lm
+MAIN    = theboys
+ENTREGA = $(MAIN)
 
-# arquivos-objeto
-	objects = theboys.o lef.o fila.o 
-     
-all: theboys
+# lista de arquivos de cabeçalho (a completar)
+HDR = fila.h fprio.h conjunto.h
 
-theboys: theboys.o conjunto.o lef.o fila.o
-	$(CC) -o theboys theboys.o conjunto.o lef.o fila.o $(LDFLAGS)
+# lista de arquivos-objeto (a completar)
+# não inclua conjunto.o, senão ele será removido com "make clean"
+OBJ = fila.o fprio.o theboys.o
 
-lef.o: lef.c
-	$(CC) -c $(CFLAGS) lef.c
+# construir o executável
+$(MAIN): $(MAIN).o $(OBJ) conjunto.o
 
-fila.o: fila.c
-	$(CC) -c $(CFLAGS) fila.c
+# construir os arquivos-objeto (a completar)
+$(MAIN).o: $(MAIN).c $(HDR)
 
-theboys.o: theboys.c
-	$(CC) -c $(CFLAGS) theboys.c
+# construir os TADs
+fila.o:  fila.c fila.h
+fprio.o: fprio.c fprio.h
 
-# arquivo TGZ para entregar
-entrega: clean
-	mkdir $(ENTREGA)
-	cp *.c *.h makefile $(ENTREGA)
-	chmod 600 $(ENTREGA)/*
-	tar czvf $(ENTREGA).tgz $(ENTREGA)
-	rm -rf $(ENTREGA)
+# executar
+run: $(MAIN)
+	./$(MAIN)
+
+# testar no Valgrind
+valgrind: $(MAIN)
+	valgrind --leak-check=full --track-origins=yes ./$(MAIN)
+
+# gerar arquivo TGZ para entregar
+tgz: clean
+	-mkdir -p /tmp/$(USER)/$(ENTREGA)
+	chmod 0700 /tmp/$(USER)/$(ENTREGA)
+	cp *.c *.h makefile /tmp/$(USER)/$(ENTREGA)
+	tar czvf $(ENTREGA).tgz -C /tmp/$(USER) $(ENTREGA)
+	rm -rf /tmp/$(USER)
 	@echo "Arquivo $(ENTREGA).tgz criado para entrega"
 
+# limpar arquivos temporários
 clean:
-	rm -f $(objects) theboys
+	rm -f *~ $(OBJ) $(MAIN) /tmp/$(USER)/$(ENTREGA) $(ENTREGA).tgz
 

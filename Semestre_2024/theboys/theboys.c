@@ -1,14 +1,21 @@
-#include <stdio.h>
-/* demais includes */
+// programa principal do projeto "The Boys - 2024/2"
+// Autor: xxxxx, GRR xxxxxx
 
-/* funcoes que voce ache necessarias aqui */
+// seus #includes vão aqui
 
-int main (){
-    /* declaracoes de variaveis aqui */
+// seus #defines vão aqui
 
-    srand (0); /* use zero, nao faca com time (0) */
+// minimize o uso de variáveis globais
 
-    /* coloque seu codigo aqui */
+// programa principal
+int main ()
+{
+  // iniciar o mundo
 
-    return 0;   
+  // executar o laço de simulação
+
+  // destruir o mundo
+
+  return (0) ;
 }
+

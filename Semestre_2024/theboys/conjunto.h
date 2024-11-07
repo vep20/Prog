@@ -1,142 +1,79 @@
-/* 
- * TAD conjunto
- * Autores: 
- *    Andre Ricardo Abed Gregio
- *    Fabiano Silva
- *    Luis Carlos Erpen de Bona
- *    Marcos Alexandre Castilho 
- *
- * Versao 1.0.0 de 10/11/2021
- * Versao 1.0.1 de 16/08/2022
- * Versao 1.1.0 de 17/11/2022
- * Versao 2.0.0 de 06/10/2023
- */
+// Tipo abstrato de dado "conjunto de inteiros"
+// Prof. Carlos Maziero - DINF/UFPR, Out 2024
+//
+// Este TAD implementa um conjunto de números inteiros com capacidade para
+// até CAP valores entre 0 e CAP-1, definida no momento de sua criação.
+//
+// Implementação com vetor de booleanos.
 
-struct conjunto {
-    int max;    /* tamanho maximo do vetor atualmente alocado     */
-    int card;   /* cardinalidade, isto eh, tamanho usado ate max  */
-    int ptr;    /* ponteiro para algum indice do vetor (iterador) */
-    int *v;     /* vetor de inteiros com no maximo max elementos  */
-};
+#ifndef CONJUNTO
+#define CONJUNTO
 
-/*
- * Cria um conjunto vazio e o retorna, se falhar retorna NULL.
- * max eh o tamanho maximo do conjunto, isto eh, o tamanho maximo do vetor
- */
-struct conjunto *cria_cjt (int max);
+#include <stdbool.h>
 
-/*
- * Remove todos os elementos do conjunto, libera espaco e devolve NULL.
- */
-struct conjunto *destroi_cjt (struct conjunto *c);
+// estrutura que implementa um conjunto de inteiros
+struct cjto_t
+{
+  int cap ;			// Capacidade do conjunto
+  int num ;			// Número de itens (cardinalidade)
+  bool *flag ;			// Vetor de booleanos
+} ;
 
-/*
- * Retorna 1 se o conjunto esta vazio e 0 caso contrario.
- */
-int vazio_cjt (struct conjunto *c);
+// Cria um conjunto vazio para armazenar até CAP valores entre 0 e CAP-1
+// Retorno: ponteiro para o novo conjunto ou NULL em erro.
+struct cjto_t *cjto_cria (int cap) ;
 
-/*
- * Retorna a cardinalidade do conjunto, isto eh, o numero de elementos presentes nele.
- */
-int cardinalidade_cjt (struct conjunto *c);
+// Destrói o conjunto, liberando a memória ocupada por ele.
+// Retorno: NULL
+struct cjto_t *cjto_destroi (struct cjto_t *c) ;
 
-/*
- * Insere o elemento no conjunto, garante que nao existam repeticoes.
- * Retorna 1 se a operacao foi bem sucedida. Se tentar inserir elemento existente,
- * nao faz nada e retorna 1 tambem. Retorna 0 em caso de falha por falta de espaco.
- */
-int insere_cjt (struct conjunto *c, int elemento);
+// Cria e retorna uma cópia do conjunto c.
+// Retorno: ponteiro para o novo conjunto ou NULL em erro.
+struct cjto_t *cjto_copia (struct cjto_t *c) ;
 
-/*
- * Remove o elemento 'elemento' do conjunto caso ele exista.
- * Retorna 1 se a operacao foi bem sucedida e 0 se o elemento nao existe.
- */
-int retira_cjt (struct conjunto *c, int elemento);
+// Cria um conjunto para até CAP valores preenchido
+// com N itens aleatórios na faixa [0...CAP-1].
+// Retorno: ponteiro para o novo conjunto ou NULL em erro.
+struct cjto_t *cjto_aleat (int n, int cap) ;
 
-/*
- * Retorna 1 se o elemento pertence ao conjunto e 0 caso contrario.
- */
-int pertence_cjt (struct conjunto *c, int elemento);
+// Insere um item no conjunto. Ignora se item não estiver entre 0 e CAP-1.
+// Retorno: número de itens no conjunto após a operação ou -1 em erro.
+int cjto_insere (struct cjto_t *c, int item) ;
 
-/*
- * Retorna 1 se o conjunto c1 esta contido no conjunto c2 e 0 caso contrario.
- */
-int contido_cjt (struct conjunto *c1, struct conjunto *c2);
+// Retira um item do conjunto. Ignora se item não estiver entre 0 e CAP-1.
+// Retorno: número de itens no conjunto após a operação ou -1 em erro.
+int cjto_retira (struct cjto_t *c, int item) ;
 
-/*
- * Retorna 1 se o conjunto c1 eh igual ao conjunto c2 e 0 caso contrario.
- */
-int sao_iguais_cjt (struct conjunto *c1, struct conjunto *c2);
+// Informa a cardinalidade (número de itens) do conjunto.
+// Retorno: número de itens no conjunto ou -1 em erro.
+int cjto_card (struct cjto_t *c) ;
 
-/*
- * Cria e retorna o conjunto diferenca entre c1 e c2, nesta ordem.
- * Retorna NULL se a operacao falhou.
- */
-struct conjunto *diferenca_cjt (struct conjunto *c1, struct conjunto *c2);
+// Testa se o item está no conjunto.
+// Retorno: 1 se está no conjunto, 0 se não está ou -1 em erro.
+int cjto_pertence (struct cjto_t *c, int item) ;
 
-/*
- * Cria e retorna o conjunto interseccao entre os conjuntos c1 e c2.
- * Retorna NULL se a operacao falhou.
- */
-struct conjunto *interseccao_cjt (struct conjunto *c1, struct conjunto *c2);
+// Testa se os conjuntos c1 e c2 têm os mesmos itens.
+// Retorno: 1 se c1 == c2, 0 se não ou -1 em erro.
+int cjto_iguais (struct cjto_t *c1, struct cjto_t *c2) ;
 
-/*
- * Cria e retorna o conjunto uniao entre os conjunto c1 e c2.
- * Retorna NULL se a operacao falhou.
- */
-struct conjunto *uniao_cjt (struct conjunto *c1, struct conjunto *c2);
+// Testa se o conjunto c1 contém o conjunto c2.
+// Retorno: 1 se c1 contém c2, 0 se não ou -1 em erro.
+int cjto_contem (struct cjto_t *c1, struct cjto_t *c2) ;
 
-/*
- * Cria e retorna uma copia do conjunto c e NULL em caso de falha.
- */
-struct conjunto *copia_cjt (struct conjunto *c);
+// Cria e retorna o conjunto uniao entre os conjunto c1 e c2.
+// Retorno: ponteiro para o novo conjunto ou NULL em erro.
+struct cjto_t *cjto_uniao (struct cjto_t *c1, struct cjto_t *c2) ;
 
-/*
- * Cria e retorna um subconjunto com elementos aleatorios do conjunto c.
- * Se o conjunto for vazio, retorna um subconjunto vazio.
- * Se n >= cardinalidade (c) entao retorna o proprio conjunto c.
- * Supoe que a funcao srand () tenha sido chamada antes.
- */
-struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n);
+// Cria e retorna o conjunto interseção entre os conjunto c1 e c2.
+// Retorno: ponteiro para o novo conjunto ou NULL em erro.
+struct cjto_t *cjto_inter (struct cjto_t *c1, struct cjto_t *c2) ;
 
-/*
- * Imprime os elementos do conjunto sempre em ordem crescente,
- * mesmo que a estrutura interna nao garanta isso.
- * Na impressao os elementos sao separados por um unico espaco
- * em branco entre os elementos, sendo que apos o ultimo nao
- * deve haver espacos em branco.
- * A impressao deve ser assim para cada elemento e_i:
- * [ e_1 e_2 ... e_n ]
- * Se o conjunto for vazio imprimir assim:
- * [ ]
- * Ao final imprime um \n.
- */
-void imprime_cjt (struct conjunto *c);
+// Cria e retorna o conjunto diferença c1 - c2.
+// Retorno: ponteiro para o novo conjunto ou NULL em erro.
+struct cjto_t *cjto_dif (struct cjto_t *c1, struct cjto_t *c2) ;
 
-/*
- * As funcoes abaixo implementam um iterador que vao permitir
- * percorrer os elementos do conjunto.
- * O ponteiro ptr da struct (iterador) pode ser inicializado para apontar 
- * para o primeiro elemento e incrementado ate' o ultimo elemento 
- * do conjunto.
- */
+// Imprime o conteúdo do conjunto no formato "item item ...",
+// com um espaço entre itens, sem espaços antes/depois e sem \n no fim
+void cjto_imprime (struct cjto_t *c) ;
 
-/*
- * Inicializa ptr usado na funcao incrementa_iterador 
- */
-void inicia_iterador_cjt (struct conjunto *c);
-
-/*
- * Devolve no parametro ret_iterador o elemento apontado e incrementa o iterador.
- * A funcao retorna 0 caso: (1) o iterador ultrapasse o ultimo elemento ou
- * (2) o conjunto eh vazio. A funcao retorna 1 caso o iterador aponte para um 
- * elemento valido (dentro do conjunto).
- */
-int incrementa_iterador_cjt (struct conjunto *c, int *ret_iterador);
-
-/*
- * Escolhe um elemento qualquer do conjunto para ser removido, o remove e
- * o retorna.
- * Nao faz teste se conjunto eh vazio, deixa para main fazer isso       
- */
-int retira_um_elemento_cjt (struct conjunto *c);
+#endif

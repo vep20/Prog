@@ -267,8 +267,6 @@ int main ()
   if (status != -1)
     erro ("insere item repetido não retornou erro") ;
   
-  item = item_destroi(item); /*evitar vazamento*/
-
   fprio_verifica (fp) ;
 
   // retira com fila NULL
