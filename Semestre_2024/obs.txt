@@ -155,7 +155,17 @@ mesmo um ponteiro sendo void, é possivel comparar ele com outro. Não pode real
 o mesmo. 
 
 
+05/10 -
 
+   struct cjto_t{
+      bool flag[]; - 1 byte 
+      int cap;
+      int num;
+   }
+
+flag[i] = true sse i e C;
+pesquisar sobre bitmap - vetor de flag informando se i pertence; 
+nas maquinas que usamos, utilizamos firesystem, toda area há um bitmap informando qual espaço esta disponivel
 
 
 

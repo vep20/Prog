@@ -1,24 +1,20 @@
-# Makefile de exemplo (Manual do GNU Make)
-     
-CFLAGS = -Wall -Werror -Wextra -std=c90 -g  # flags de compilacao
-LDFLAGS = -lm
+# makefile generico para os TADs
+# Carlos Maziero - DINF/UFPR
 
-CC = gcc
+CC     = gcc
+CFLAGS = -Wall -Wextra -g -std=c99
+LIB    = fprio
+BIN    = testa-fprio
 
-# arquivos-objeto
-	objects = tp5.o fila.o lef.o 
+$(BIN):   $(BIN).o $(LIB).o
+$(BIN).o: $(BIN).c $(LIB).h
+$(LIB).o: $(LIB).c $(LIB).h
 
-tp5: tp5.o fila.o lef.o
-	$(CC) -o tp5 tp5.o fila.o lef.o $(LDFLAGS)
+teste: $(BIN)
+	./$(BIN)
 
-fila.o: fila.c
-	$(CC) -c $(CFLAGS) fila.c
-
-lef.o: lef.c
-	$(CC) -c $(CFLAGS) lef.c
-
-tp5.o: tp5.c
-	$(CC) -c $(CFLAGS) tp5.c
+valgrind: $(BIN)
+	valgrind --leak-check=full --track-origins=yes ./$(BIN)
 
 clean:
-	rm -f $(objects) tp4
+	rm -f *.o *~ $(BIN)
