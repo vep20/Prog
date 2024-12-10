@@ -11,7 +11,7 @@
 struct fprio_t *fprio_cria (){
     struct fprio_t *nova_fila;
 
-    nova_fila = (struct fprio_t *) malloc (sizeof (struct fprio_t));
+    nova_fila = malloc (sizeof (struct fprio_t));
 
     if (!nova_fila)
         return NULL;
@@ -53,7 +53,7 @@ int fprio_insere (struct fprio_t *f, void *item, int tipo, int prio){
         }
     }
     
-    novo_nodo = (struct fpnodo_t *) malloc (sizeof (struct fpnodo_t));
+    novo_nodo = malloc (sizeof (struct fpnodo_t));
     if (!novo_nodo)
         return -1;
 

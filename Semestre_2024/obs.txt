@@ -61,7 +61,7 @@ Aula5 lab - Alocação de memória em C
 
    obs: malloc pega memoria na heap;
 
-   Para o tp3 sera necessario mallocar struct, sendo assim, em exeplemplo:
+   Para o tp3 sera necessario mallocar struct, sendo assim, em exemplo:
    {struct ponto *p[10];
 
    p[i] = cria_r;}
@@ -172,7 +172,7 @@ nas maquinas que usamos, utilizamos firesystem, toda area há um bitmap informan
    Dica de alg de implementação de conjuntos de herois(base), ordenar por distancia das missões;
    Sempre testar se heroi esta morto;
    
-   mundo.h 
+      mundo.h 
       base
       heroi 
       vetor de ponteitos, alocamento dinamico missão - tentativa 
@@ -183,10 +183,43 @@ nas maquinas que usamos, utilizamos firesystem, toda area há um bitmap informan
 
    verificar arquivo de saida a partir da linha 330
    
+12/11
+
+consertar malloc para:
+                  /*type casting*/
+c89 utilizava-se (struct nodo_t *) malloc(sizeof(strcut nodo_)), porque malloc retornava um *char
+c99 somente utiliza aux = malloc(........)
+
+14/11
+
+   comandos basicos unix:
+   diretorio bin possui todos os comandos basicos do linux;
+   home do dinf:  home> bcc imb e prof;
+   pwd, mostra o caminho que você esta;
+   nome do progama -k nome da pesquisa - mostra onde é mencionado o nome da pesquisa
+   tree, mostra a "arvore de um diretorio"
+   man, para verificar o manual de cada comando 
+   which - acha o programa 
+   du - quanto do disco usa
 
 
+   Organize seu desenvolvimento da seguinte forma:
 
+Desenvolva os TADs:
+Implemente e teste um módulo de TAD por vez
+Em cada módulo, implemente e teste uma função por vez
+Implemente as funções nesta ordem: _imprime, _cria, _insere, _retira, …
+Em cada função, escreva e teste um bloco por vez
+Comece sempre pela parte mais simples
+Use os programas de teste e o Valgrind para se assegurar que o módulo está correto, antes de iniciar o próximo módulo.
 
-
-
+Desenvolva o programa theboys.c:
+   Defina as estruturas de dados necessárias
+   Implemente a criação e destruição dessas estruturas de dados
+   Implemente a criação dos eventos iniciais
+   Defina uma função para cada evento, contendo inicialmente apenas um printf do mesmo
+   Implemente o laço principal de simulação, que chama as funções dos eventos
+   Implemente e teste uma função de evento por vez (deixe a missão por último)   
+   Analise a saída para ver se a sequência de eventos parece correta
+   Use o Valgrind para verificar eventuais problemas de memória
 

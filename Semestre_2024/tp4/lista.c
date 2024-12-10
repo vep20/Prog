@@ -12,7 +12,7 @@
 struct lista_t *lista_cria(){
     struct lista_t *nova_lista;
 
-    nova_lista = (struct lista_t *) malloc (sizeof (struct lista_t));
+    nova_lista = malloc (sizeof (struct lista_t));
 
     if (!nova_lista) /*testa para verificar se há espaço para alocação na memoria*/
         return NULL;
@@ -42,7 +42,7 @@ int lista_insere(struct lista_t *lst, int item, int pos){
     if (!lst)
         return -1;
 
-    novo_item = (struct item_t *) malloc (sizeof (struct item_t));
+    novo_item = malloc (sizeof (struct item_t));
     if (!novo_item)
         return -1;
 

@@ -1,21 +1,30 @@
 // programa principal do projeto "The Boys - 2024/2"
-// Autor: xxxxx, GRR xxxxxx
+// Autor: Victor Eduardo de Paula, GRR 20203937
 
-// seus #includes vão aqui
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include "execucao.h"
 
-// seus #defines vão aqui
+int main (){
+  struct mundo *novo_mundo;
+  srand(0);
 
-// minimize o uso de variáveis globais
+  // inicia o mundo
+  novo_mundo = cria_mundo();
+  if(!novo_mundo)
+    erro ("Não criou mundo\n"); // função
+  
+  inicia_mundo(novo_mundo);
 
-// programa principal
-int main ()
-{
-  // iniciar o mundo
+  // executa o laço de simulação
+  while (novo_mundo->relogio < T_FIM_DO_MUNDO){
 
-  // executar o laço de simulação
+    
 
-  // destruir o mundo
-
-  return (0) ;
+    novo_mundo->relogio++;
+  }
+  // destruoi o mundo
+  destroi_mundo(novo_mundo);
+  return 0;
 }
-
