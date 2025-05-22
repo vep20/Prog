@@ -9,6 +9,19 @@
 #include <stdlib.h>
 #include "lista.h"
 
+struct item_t{
+  int valor ;                   // valor do item
+  struct item_t *ant ;          // item anterior
+  struct item_t *prox ; // próximo item
+};
+
+// estrutura de uma lista
+struct lista_t{
+  struct item_t *prim ; // primeiro item
+  struct item_t *ult ;          // último item
+  int tamanho ;         // número de itens da lista
+};
+
 struct lista_t *lista_cria(){
     struct lista_t *nova_lista;
 

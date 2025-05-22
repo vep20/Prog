@@ -1,4 +1,4 @@
-// programa principal do projeto "The Boys - 2024/2"
+// programa principal do projeto "The Boys - 2025/1"
 // Autor: Victor Eduardo de Paula, GRR 20203937
 
 #include <stdio.h>
