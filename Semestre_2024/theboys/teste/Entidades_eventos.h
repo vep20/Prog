@@ -3,54 +3,55 @@
 
 #include "conjunto.h"
 #include "fprio.h"
-#include "lista.h"
+#include "fila.h"
 
 #define T_INICIO 0
-#define T_FIM_DO_MUNDO 10//525600
-#define N_TAMANHO_MUNDO 4//20000
-#define N_HABILIDADES  2//10
-#define N_HEROIS 5//50
-#define N_BASES 1//10
-#define N_MISSOES 5//52560
+#define T_FIM_DO_MUNDO 200 //525600
+#define N_TAMANHO_MUNDO 4 //20000
+#define N_HABILIDADES  2 //10
+#define N_HEROIS N_HABILIDADES * 5 
+#define N_BASES N_HEROIS / 5 
+#define N_MISSOES T_FIM_DO_MUNDO / 100
+#define N_COMPOSTOS_V N_HABILIDADES * 3
 
 struct heroi{
-    int ID;
-    struct cjto_t *habilidades;
-    int paciencia;
-    int velocidade;
-    int experiencia;
-    struct base *base_atual;
+    struct cjto_t *habilidades; //conjunto de habilidades de cada heroi
+    int ID; //identificação de cada heroi
+    int paciencia; //indicador de quao paciente cada heroi é 
+    int velocidade; //indicador o quão rapido um heroi consegue se deslocar de uma base a outra
+    int experiencia; //indica o numero de missões que cada heroi já participou
+    int ID_BASE; //identificação da base em que cada heroi se encontra 
 };
 
-struct local{
+struct local{ //cordenadas de localização
     int x;
     int y;
 };
 
 struct base{
-    int ID;
-    int lotacao;
-    struct cjto_t *presentes;
-    struct fprio_t *espera;
-    struct local *lb;
+    struct cjto_t *presentes; //conjunto de ID de herois localizados naquela base, equipe disponivel
+    struct fila *espera; //struct fprio_t *espera;
+    struct local *lb; //conjunto de coordenadas de onde cada base se encontra
+    int ID; //identificação de cada base
+    int lotacao;  //numero maximo de herois para auela base
 };
 
 struct missao{
+    struct cjto_t *habilidades; //conjunto de habilidades que são necessarias para realizar a missao
+    struct local *lm; //conjunto de coordenadas de onde cada missão se encontra
     int ID;
-    struct cjto_t *habilidades;
-    int perigo;
-    struct local *lm;
 };
 
 struct mundo{
-    int nherois; // numero de herois
-    struct heroi *herois; // vetor de herois 
-    int nbases; // numero de bases
-    struct base *bases; // vetor de bases
-    int nmissoes; // numero de missões
-    struct missao *missoes; // vetor de missoes
-    int nhabilidades; // numero de habilidades
+    struct heroi *herois; //vetor de herois 
+    struct base *bases; //vetor de bases
+    struct missao *missoes; //vetor de missoes
     struct local *TamanhoMundo; 
+    int nherois; //numero de herois
+    int nbases; //numero de bases
+    int nmissoes; //numero de missões
+    int nhabilidades; //numero de habilidades
+    int nCompostoV; //numero de compostos V disponiveis
     int relogio;
 };
 
@@ -60,15 +61,17 @@ void erro (char *msg);
 // Função que cria e retorna um número aleatório entre min e max, inclusive.
 int aleat (int min, int max);
 
-// Função onde um herói H entra na fila de espera da base B. 
-// Assim que H entrar na fila, o porteiro da base B deve ser 
-// avisado para verificar a fila
-void espera(int tempo, struct heroi h, struct base b);
 
+/*  
 // Função que Representa um herói H chegando em uma base
 // B no instante T. Ao chegar, o herói analisa o tamanho 
 // da fila e decide se espera para entrar ou desiste
 void chega (int tempo, struct heroi h, struct base b);
+
+// Função onde um herói H entra na fila de espera da base B. 
+// Assim que H entrar na fila, o porteiro da base B deve ser 
+// avisado para verificar a fila
+void espera (int tempo, struct heroi h, struct base b);
 
 // Função onde um herói H desiste de entrar na base B, escolhe 
 // uma base aleatória D e viaja para lá
@@ -112,5 +115,6 @@ void missoes (int tempo, struct missao m);
 // Função onde se encerra a simulação, gerando um relatório com informações sobre heróis, 
 // bases e missões.
 void fim (int tempo);
+*/
 
 #endif

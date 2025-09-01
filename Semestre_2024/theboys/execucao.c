@@ -7,7 +7,7 @@ struct mundo *cria_mundo (){
 
     aux = malloc (sizeof (struct mundo));
     if (!aux){
-        fprintf(stderr, "Erro ao criar o mundo!\n");
+        erro ("Erro ao criar o mundo!\n");
         return NULL;
     }
     return aux;
@@ -27,6 +27,7 @@ void inicia_mundo (struct mundo *m){
     m->nherois = N_HEROIS;
     m->nbases = N_BASES;
     m->nmissoes = N_MISSOES;
+    m->nCompostoV = N_COMPOSTOS_V;
 
     if (!cria_herois(m))// Alloca vetor de herois e preenche os mebros do mesmo
         erro("Erro ao criar vetor de herois!\n");
@@ -37,9 +38,10 @@ void inicia_mundo (struct mundo *m){
     if (!cria_missoes(m))// Alloca vetor de missões e preenche os mebros do mesmo
         erro("Erro ao criar vetor de missoes!\n"); 
 
-    m->missoes = fprio_cria;
+    m->missoes = fprio_cria();
     if (!m->missoes)
         erro("Erro na criação LEF");
+
 }
 
 struct heroi inicia_heroi (int id){
@@ -151,8 +153,6 @@ struct missao inicia_missao (int id){
         // Verifica se habilidade já não esta no cjto
         cjto_insere(nova_missao.habilidades, hab);
     }
-
-    nova_missao.perigo = aleat (0, 100);  
 
     return nova_missao;
 }

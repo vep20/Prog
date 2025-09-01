@@ -3,15 +3,16 @@
 
 #include "conjunto.h"
 #include "fprio.h"
-#include "lista.h"
+#include "fila.h"
 
 #define T_INICIO 0
-#define T_FIM_DO_MUNDO 10//525600
-#define N_TAMANHO_MUNDO 4//20000
-#define N_HABILIDADES  2//10
-#define N_HEROIS 5//50
-#define N_BASES 1//10
-#define N_MISSOES 5//52560
+#define T_FIM_DO_MUNDO 200 //525600
+#define N_TAMANHO_MUNDO 4 //20000
+#define N_HABILIDADES  2 //10
+#define N_HEROIS N_HABILIDADES * 5 
+#define N_BASES N_HEROIS / 5 
+#define N_MISSOES T_FIM_DO_MUNDO / 100
+#define N_COMPOSTOS_V N_HABILIDADES * 3
 
 struct heroi{
     struct base *base_atual;
@@ -39,7 +40,6 @@ struct missao{
     struct cjto_t *habilidades;
     struct local *lm;
     int ID;
-    int perigo;
 };
 
 struct mundo{
@@ -51,6 +51,7 @@ struct mundo{
     int nbases; // numero de bases
     int nmissoes; // numero de missões
     int nhabilidades; // numero de habilidades
+    int nCompostoV; // numero de compostos V disponiveis
     int relogio;
 };
 
@@ -103,7 +104,7 @@ void morre (int tempo, struct heroi h, struct base b);
 // - Uma equipe está apta para a missão se a união das habilidades de seus heróis 
 //   contém as habilidades requeridas pela missão.
 // - Deve ser escolhida para a missão a equipe da base mais próxima ao local da 
-//   missão e que esteja apta para ela.
+//   missão e que esteja apta para ela. 
 // - Ao completar uma missão, os heróis da equipe escolhida ganham pontos de experiência.
 // - Um herói pode morrer ao participar de uma missão. :NEW:
 // - Se uma missão não puder ser completada, ela é marcada como “impossível” e adiada de 24 horas.
