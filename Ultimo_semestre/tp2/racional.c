@@ -61,6 +61,16 @@ struct racional simplifica_r (struct racional r){
   return aux;
 }
 
+long numerador_r (struct racional r){
+
+  return r.num;
+}
+
+long denominador_r (struct racional r){
+
+  return r.den;
+}
+
 struct racional cria_r (long numerador, long denominador){
   struct racional aux; 
 

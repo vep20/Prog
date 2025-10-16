@@ -4,15 +4,15 @@
 CC      = gcc
 CFLAGS  = -Wall -Wextra -Werror -g -std=c99
 LDLIBS  = -lm
-MAIN    = test
+MAIN    = theboys
 ENTREGA = $(MAIN)
 
-# lista de arquivos de cabeçalho (a completar)
-HDR = lista.h fprio.h conjunto.h Entidades_eventos.h execucao.h
+# fila de arquivos de cabeçalho (a completar)
+HDR = fila.h fprio.h conjunto.h
 
-# lista de arquivos-objeto (a completar)
+# fila de arquivos-objeto (a completar)
 # não inclua conjunto.o, senão ele será removido com "make clean"
-OBJ = lista.o fprio.o test.o conjunto.o Entidades_eventos.o execucao.o
+OBJ = fila.o fprio.o theboys.o
 
 # construir o executável
 $(MAIN): $(MAIN).o $(OBJ) conjunto.o
@@ -21,7 +21,7 @@ $(MAIN): $(MAIN).o $(OBJ) conjunto.o
 $(MAIN).o: $(MAIN).c $(HDR)
 
 # construir os TADs
-lista.o: lista.c lista.h
+fila.o: fila.c fila.h
 fprio.o: fprio.c fprio.h
 
 # executar
@@ -44,4 +44,3 @@ tgz: clean
 # limpar arquivos temporários
 clean:
 	rm -f *~ $(OBJ) $(MAIN) /tmp/$(USER)/$(ENTREGA) $(ENTREGA).tgz
-

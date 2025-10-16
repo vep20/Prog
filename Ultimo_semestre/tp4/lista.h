@@ -7,20 +7,10 @@
 #define LISTA
 
 // estrutura de um item da lista
-struct item_t
-{
-  int valor ;			// valor do item
-  struct item_t *ant ;		// item anterior
-  struct item_t *prox ;	// próximo item
-} ;
+struct item_t;
 
 // estrutura de uma lista
-struct lista_t
-{
-  struct item_t *prim ;	// primeiro item
-  struct item_t *ult ;		// último item
-  int tamanho ;		// número de itens da lista
-} ;
+struct lista_t;
 
 // Cria uma lista vazia.
 // Retorno: ponteiro p/ a lista ou NULL em erro.

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "execucao.h"
+#include "Entidades_eventos.h"
 
 int main (){
   struct mundo *novo_mundo;
