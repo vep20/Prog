@@ -155,7 +155,7 @@ int main (){
     if (status >= 0)
       printf ("Retirou %d\n", valor) ;
     else
-      erro ("não retirou valor do inicio da lista l1") ;
+      erro ("não retirou valor do inicio da lista l0") ;
     lista_print ("L1", l1) ;
   }
   printf ("Lista vazia!\n") ;

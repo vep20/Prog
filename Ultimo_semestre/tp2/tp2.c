@@ -106,7 +106,10 @@ int main (){
   imprime_vetor(vetor,n);
   soma_vetor(vetor,n,&soma);
   printf("SOMA = ");
-  imprime_r(soma);
+  if (soma.num == 0)
+    printf("0");
+  else
+    imprime_r(soma);
   printf("\n");
   return 0;
 } 
