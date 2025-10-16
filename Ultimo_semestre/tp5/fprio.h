@@ -1,5 +1,6 @@
 // TAD Fila de prioridades (FPRIO) genérica
 // Carlos Maziero, DINF/UFPR, Out 2024
+// Marcos Castilho, atualizacao para structs opacas, Out 2025
 // Definição da interface
 
 // NÃO ALTERAR
@@ -7,9 +8,11 @@
 #ifndef FPRIO
 #define FPRIO
 
+// Estas duas structs sao opacas para o usuario e sao definidas em
+// fprio.c
+//
 // descreve um nodo da fila de prioridades
 struct fpnodo_t;
-
 // descreve uma fila de prioridades
 struct fprio_t;
 
