@@ -74,14 +74,14 @@ struct racional *soma_vetor(struct racional *v[], int tam){
   if (tam == 0 || v[0] == NULL)
     return NULL;
 
-  soma = cria_r(v[0]->num, v[0]->den);
+  soma = cria_r(numerador_r(v[0]), denominador_r(v[0]));
 
   for (int i = 1; i < tam; i++){
 
     if (!valido_r(v[i]))
       return NULL;
 
-    temp = cria_r(soma->num, soma->den);
+    temp = cria_r(numerador_r(soma), denominador_r(soma));
     soma_r(soma, v[i], soma);
 
     if (temp != v[0])
@@ -132,7 +132,7 @@ int main(){
   else{
     printf("SOMA = ");
     imprime_r(soma);
-    destroi_r(soma);
+    destroi_r(&soma);
   }
 
   printf("\n");
