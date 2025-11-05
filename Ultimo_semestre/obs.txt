@@ -1,3 +1,6 @@
+tar zcvf tp4.tgz tp4
+./tp3 < test1.txt | diff -u - saida1.txt
+
 Aula1 lab - Boas praticas de programação
    Realizado exercicios de aquecimento
 
