@@ -1,7 +1,7 @@
 #ifndef EXECUCAO
 #define EXECUCAO
 
-#include "Entidades_eventos.h"
+#include "entidades_eventos.h"
 
 // Função que cria e devolve uma struct mundo,
 // retorna NULL em caso de erro.

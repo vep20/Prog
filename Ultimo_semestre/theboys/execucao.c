@@ -32,12 +32,14 @@ void inicia_mundo (struct mundo *m){
     if (!cria_herois(m))// Alloca vetor de herois e preenche os mebros do mesmo
         erro("Erro ao criar vetor de herois!\n");
 
+
+    /*
     if (!cria_bases(m))// Alloca vetor de bases e preenche os mebros do mesmo
         erro("Erro ao criar vetor de bases!\n");
 
     if (!cria_missoes(m))// Alloca vetor de missões e preenche os mebros do mesmo
         erro("Erro ao criar vetor de missoes!\n"); 
-
+    */
     m->missoes = fprio_cria();
     if (!m->missoes)
         erro("Erro na criação LEF");
@@ -87,6 +89,7 @@ int cria_herois (struct mundo *m){
     return 1; 
 }
 
+/*
 struct base inicia_base (int id){
     struct base nova_base;
 
@@ -265,3 +268,5 @@ void destroi_mundo(struct mundo *m){
     free(m);// Libera a estrutura principal
     m = NULL;
 }
+
+*/

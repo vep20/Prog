@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Entidades_eventos.h"
+#include "entidades_eventos.h"
 
 
 // imprime mensagem de erro e encerra execução
 void erro (char *msg){
-  fprintf (stderr, "ERRO: %s\n", msg) ;
+  fprintf (stderr, "ERRO: %s\n", msg);
   exit (1);
 }
 
