@@ -6,6 +6,31 @@
 #include <time.h>
 #include "execucao.h"
 
+
+void impr_heroi (struct heroi *heroi){
+  
+  if (!heroi){
+    erro("impossivel imprimir, heroi não allocado");
+    return;  
+  }
+  printf ();
+}
+
+void test_impr (struct mundo *mundo){
+
+  if (!mundo){
+    erro("impossivel imprimir, mundo não alocado");
+    return;
+  }
+  
+  printf ("nherois: %d\n", mundo->nherois);
+  for (int i = 0; i < N_HEROIS; i++){
+
+  }
+
+}
+
+
 int main (){
   struct mundo *novo_mundo;
   srand(0);

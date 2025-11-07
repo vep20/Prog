@@ -17,6 +17,7 @@ int aleat (int min, int max){
   return n_aleat;
 }
 
+/*
 void chega (int tempo, struct heroi h, struct base b){
 
 // atualiza base de H
@@ -121,4 +122,4 @@ void fim (int tempo){
 // apresenta estat´ısticas dos her´ois
 // apresenta estat´ısticas das bases
 // apresenta estat´ısticas das miss~oes
-}
+}*/

@@ -29,7 +29,7 @@ void inicia_mundo (struct mundo *m){
     m->nmissoes = N_MISSOES;
     m->nCompostoV = N_COMPOSTOS_V;
 
-    if (!cria_herois(m))// Alloca vetor de herois e preenche os mebros do mesmo
+    if (!cria_herois(m))// Alloca vetor de herois e preenche os mem bros do mesmo
         erro("Erro ao criar vetor de herois!\n");
 
 
