@@ -13,7 +13,7 @@ void impr_heroi (struct heroi *heroi){
     erro("impossivel imprimir, heroi não allocado");
     return;  
   }
-  printf ();
+  printf ("");
 }
 
 void test_impr (struct mundo *mundo){
