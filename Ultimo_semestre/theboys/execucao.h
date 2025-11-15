@@ -13,6 +13,7 @@ void inicia_mundo (struct mundo *m);
 // Função que destroi e da free em um ponteiro para struct mundo.
 void destroi_mundo (struct mundo *m);
 
+/*
 // Função que preenche o vetor de herois do mundo
 int cria_herois (struct mundo *m);
 
@@ -42,7 +43,6 @@ void destroi_bases(struct base *bases, int nbases);
 void destroi_missao(struct missao *m);
 
 void destroi_missoes(struct missao *missoes, int nmissoes);
-
-void destroi_mundo(struct mundo *m);
+*/
 
 #endif

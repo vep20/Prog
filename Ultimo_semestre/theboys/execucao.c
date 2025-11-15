@@ -29,23 +29,23 @@ void inicia_mundo (struct mundo *m){
     m->nmissoes = N_MISSOES;
     m->nCompostoV = N_COMPOSTOS_V;
 
+    /*
     if (!cria_herois(m))// Alloca vetor de herois e preenche os mem bros do mesmo
         erro("Erro ao criar vetor de herois!\n");
-
-
-    /*
+    
     if (!cria_bases(m))// Alloca vetor de bases e preenche os mebros do mesmo
         erro("Erro ao criar vetor de bases!\n");
 
     if (!cria_missoes(m))// Alloca vetor de missões e preenche os mebros do mesmo
         erro("Erro ao criar vetor de missoes!\n"); 
-    */
+    
     m->missoes = fprio_cria();
     if (!m->missoes)
         erro("Erro na criação LEF");
-
+    */
 }
 
+/*
 struct heroi inicia_heroi (int id){
     struct heroi novo_heroi;
     int n_hab, hab;
@@ -89,7 +89,6 @@ int cria_herois (struct mundo *m){
     return 1; 
 }
 
-/*
 struct base inicia_base (int id){
     struct base nova_base;
 
@@ -252,6 +251,8 @@ void destroi_missoes(struct missao *missoes, int nmissoes){
     missoes = NULL;
 }
 
+*/
+
 void destroi_mundo(struct mundo *m){
 
     if (!m) 
@@ -261,12 +262,12 @@ void destroi_mundo(struct mundo *m){
         free(m->TamanhoMundo);// Libera o tamanho do mundo
     m->TamanhoMundo = NULL;
 
+    /*
     destroi_herois(m->herois, m->nherois);// Libera os heróis
     destroi_bases(m->bases, m->nbases);// Libera as bases
     destroi_missoes(m->missoes, m->nmissoes);// Libera as missões
-    
+    */
+
     free(m);// Libera a estrutura principal
     m = NULL;
 }
-
-*/

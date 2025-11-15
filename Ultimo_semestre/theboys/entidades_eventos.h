@@ -61,6 +61,7 @@ void erro (char *msg);
 // Função que cria e retorna um número aleatório entre min e max, inclusive.
 int aleat (int min, int max);
 
+/*
 // Função que Representa um herói H chegando em uma base
 // B no instante T. Ao chegar, o herói analisa o tamanho 
 // da fila e decide se espera para entrar ou desiste
@@ -113,5 +114,6 @@ void missoes (int tempo, struct missao m);
 // Função onde se encerra a simulação, gerando um relatório com informações sobre heróis, 
 // bases e missões.
 void fim (int tempo);
+*/
 
 #endif
