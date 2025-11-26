@@ -6,22 +6,89 @@
 #include <time.h>
 #include "execucao.h"
 
+void impr_herois (struct mundo *mundo){
+  struct heroi aux;
 
-/*void impr_heroi (struct heroi *heroi){
+  if (!mundo || !mundo->herois)
+    erro("impossivel imprimir, mundo ou vetor de herois não allocado");
   
-  if (!heroi){
-    erro("impossivel imprimir, heroi não allocado");
-    return;  
+
+  for (int i = 0; i < mundo->nherois; i++){
+    aux = mundo->herois[i];
+
+    printf("Heroi ID: %d\n", aux.ID);
+    printf(" - Paciencia: %d\n", aux.paciencia);
+    printf(" - Velocidade: %d\n", aux.velocidade);
+    printf(" - Experiencia: %d\n", aux.experiencia);
+
+    printf (" - Habilidades: ");
+    
+    if (!cjto_card(aux.habilidades)){
+      printf("(nenhuma habilidade)");
+    }
+
+    else{
+      cjto_imprime(aux.habilidades);
+    }
+    
+    printf("\n\n");
   }
-  printf ("");
-}*/
+}
+
+void impr_bases (struct mundo *mundo){
+  struct base aux;
+
+  if (!mundo || !mundo->bases)
+    erro("impossivel imprimir, mundo ou vetor de herois não allocado");
+
+  for (int i = 0; i < mundo->nbases; i++){
+    aux = mundo->bases[i];
+
+    printf("Base ID: %d\n", aux.ID);
+    printf(" - Lotação: %d\n", aux.lotacao);
+    printf(" - Coordenadas: %d %d\n", aux.lb.x, aux.lb.y);
+
+    if (!aux.espera->num)
+      printf (" - Não há herois na fila de espera\n");
+
+    if (!cjto_card(aux.presentes))
+      printf (" - Não há nenhum heroi na base\n");
+
+    printf ("\n");
+  }
+
+}
+
+void impr_missoes(struct mundo *mundo){
+  struct missao aux;
+
+  if (!mundo || !mundo->missoes)
+    erro("impossivel imprimir, mundo ou vetor de missoes não allocado");
+
+  for (int i = 0; i < mundo->nmissoes; i++){
+    aux = mundo->missoes[i];
+    
+    printf("Missao ID: %d\n", aux.ID);
+    printf(" - Coordenadas: %d %d\n", aux.lm.x, aux.lm.y);
+    printf (" - Habilidades: ");
+    
+    if (!cjto_card(aux.habilidades)){
+      printf("(nenhuma habilidade)");
+    }
+
+    else{
+      cjto_imprime(aux.habilidades);
+    }
+    
+    printf("\n\n");
+  }  
+}
 
 void test_impr (struct mundo *mundo){
 
-  if (!mundo){
+  if (!mundo)
     erro("impossivel imprimir, mundo não alocado");
-    return;
-  }
+
   
   printf("tamanho x:%d y:%d\n",mundo->TamanhoMundo->x,mundo->TamanhoMundo->y);
   printf("relogio:%d\n", mundo->relogio);
@@ -30,12 +97,13 @@ void test_impr (struct mundo *mundo){
   printf("nmissoes:%d\n",mundo->nmissoes);
   printf("nhabilidades:%d\n",mundo->nhabilidades);
   printf("nCompostoV:%d\n",mundo->nCompostoV);
-  /*
   printf ("nherois: %d\n", mundo->nherois);
-  for (int i = 0; i < N_HEROIS; i++){
-
-  }
-  */
+  printf("\n");
+  impr_herois (mundo);
+  printf("\n");
+  impr_bases (mundo);
+  printf("\n");
+  impr_missoes(mundo);  
 }
 
 
@@ -45,7 +113,7 @@ int main (){
 
   // inicia o mundo
   novo_mundo = cria_mundo();
-  if(!novo_mundo)
+  if (!novo_mundo)
     erro ("Não criou mundo\n"); // função
   
   inicia_mundo(novo_mundo);

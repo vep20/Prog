@@ -13,36 +13,30 @@ void inicia_mundo (struct mundo *m);
 // Função que destroi e da free em um ponteiro para struct mundo.
 void destroi_mundo (struct mundo *m);
 
-/*
 // Função que preenche o vetor de herois do mundo
 int cria_herois (struct mundo *m);
 
 // Função que inicia os membros de uma struct heroi.
 struct heroi inicia_heroi (int id);
 
+// Função para liberar os conjuntos de cada heroi (se existente no mundo)
+void libera_herois (struct mundo *m);
+
 // Função que preenche o vetor de bases do mundo
 int cria_bases (struct mundo *m);
 
-// Função que inicia os membros de uma struct heroi.
+// Função que inicia os membros de uma struct base.
 struct base inicia_base (int id);
+
+void libera_bases (struct mundo *m);
 
 // Função que preenche o vetor de missoes do mundo
 int cria_missoes (struct mundo *m);
 
-// Função que destroi e da free em um ponteiro para struct mundo.
+// Função que preenche os membros de uma struct missao.
 struct missao inicia_missao (int id);
 
-void destroi_heroi(struct heroi *h);
-
-void destroi_herois(struct heroi *herois, int nherois);
-
-void destroi_base(struct base *b);
-
-void destroi_bases(struct base *bases, int nbases);
-
-void destroi_missao(struct missao *m);
-
-void destroi_missoes(struct missao *missoes, int nmissoes);
-*/
+// Função para liberar os conjuntos de cada missao (se existente no mundo)
+void libera_missoes (struct mundo *m);
 
 #endif

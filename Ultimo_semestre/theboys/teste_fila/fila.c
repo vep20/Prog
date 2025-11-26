@@ -29,17 +29,16 @@ struct fila_t *fila_destroi(struct fila_t *f) {
 }
 
 int fila_insere(struct fila_t *f, int item) {
-    struct fila_nodo_t *novo;
+    struct fila_nodo_t *novo, *aux ;
 
     if (!f)
         return 0;
 
-    /*    
     // Verifica se o item já está na fila
     for (aux = f->prim; aux; aux = aux->prox) {
         if (aux->item == item)
             return 0;
-    }*/
+    }
 
     novo = malloc(sizeof(struct fila_nodo_t));
     if (!novo)
@@ -91,7 +90,7 @@ void fila_imprime(struct fila_t *f) {
         return;
 
     aux = f->prim;
-    printf("(%d)", aux->item);  //imprime o item
+    printf("(%d)", aux->item);  // imprime o item
     aux = aux->prox;
 
     while (aux) {

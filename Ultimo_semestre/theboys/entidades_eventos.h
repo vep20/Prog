@@ -8,10 +8,10 @@
 #define T_INICIO 0
 #define T_FIM_DO_MUNDO 200 //525600
 #define N_TAMANHO_MUNDO 4 //20000
-#define N_HABILIDADES  2 //10
+#define N_HABILIDADES 4//10
 #define N_HEROIS N_HABILIDADES * 5 
 #define N_BASES N_HEROIS / 5 
-#define N_MISSOES T_FIM_DO_MUNDO / 100
+#define N_MISSOES 15//T_FIM_DO_MUNDO / 100
 #define N_COMPOSTOS_V N_HABILIDADES * 3
 
 struct heroi{
@@ -30,23 +30,24 @@ struct local{
 
 struct base{
     struct cjto_t *presentes;
-    struct fprio_t *espera;
-    struct local *lb;
+    struct fila_t *espera;
+    struct local lb;
     int ID;
     int lotacao;
 };
 
 struct missao{
     struct cjto_t *habilidades;
-    struct local *lm;
+    struct local lm;
     int ID;
 };
 
 struct mundo{
-    struct heroi *herois; // vetor de herois 
-    struct base *bases; // vetor de bases
-    struct missao *missoes; // vetor de missoes
+    struct heroi herois[N_HEROIS]; // vetor de herois 
+    struct base bases[N_BASES]; // vetor de bases
+    struct missao missoes[N_MISSOES]; // vetor de missoes
     struct local *TamanhoMundo; 
+    struct fprio_t *eventos;
     int nherois; // numero de herois
     int nbases; // numero de bases
     int nmissoes; // numero de missões

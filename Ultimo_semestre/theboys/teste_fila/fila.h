@@ -26,7 +26,7 @@ struct fila_t *fila_destroi (struct fila_t *f);
 
 // Insere um item no final da fila (politica FIFO).
 // Retorno: 1 se tiver sucesso ou 0 se falhar.
-int fila_insere (struct fila_t *f, int item);
+int fila_insere (struct fila_t *f, int item);// void *item);
 
 // Retira o primeiro item da fila e o devolve
 // Retorno 1 se a operação foi bem sucedida e 0 caso contrário
