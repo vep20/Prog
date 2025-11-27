@@ -6,13 +6,25 @@
 #include "fila.h"
 
 #define T_INICIO 0
-#define T_FIM_DO_MUNDO 200 //525600
+#define T_FIM_DO_MUNDO 50000 //525600
 #define N_TAMANHO_MUNDO 4 //20000
 #define N_HABILIDADES 4//10
 #define N_HEROIS N_HABILIDADES * 5 
 #define N_BASES N_HEROIS / 5 
 #define N_MISSOES 15//T_FIM_DO_MUNDO / 100
 #define N_COMPOSTOS_V N_HABILIDADES * 3
+
+// Valores dos eventos para definir o tipo na LEF (fila de prioridades já criada em trabalho anterior)
+#define EV_CHEGA   0
+#define EV_ESPERA  1
+#define EV_DESISTE 2
+#define EV_AVISA   3
+#define EV_ENTRA   4
+#define EV_SAI     5
+#define EV_VIAJA   6
+#define EV_MORRE   7
+#define EV_MISSAO  8
+#define EV_FIM     9
 
 struct heroi{
     struct base *base_atual;
@@ -55,12 +67,24 @@ struct mundo{
     int nCompostoV; // numero de compostos V disponiveis
     int relogio;
 };
+// Estrutra utilzada para auxiliar a inserer os eventos na LEF
+// Como a fprio_insere so aceita um void *item é necessario transformar esses dados 
+struct dado_evento{
+    int dado1; // ID heroi ou missão
+    int dado2; // ID base 
+};
 
 // Função mensagem de erro
 void erro (char *msg);
 
-// Função que cria e retorna um número aleatório entre min e max, inclusive.
+// Função que cria e retorna um número aleatório entre min e max
 int aleat (int min, int max);
+
+// Função para auxiliar inserir os dados na LEF
+void cria_eventos (struct mundo *m, int temp, int tipo, int d1, int d2);
+
+// Função que cria os eventos iniciais da simulação, para os herois, missoes e fim do mundo
+void eventos_iniciais (struct mundo *m);
 
 /*
 // Função que Representa um herói H chegando em uma base

@@ -99,11 +99,36 @@ void test_impr (struct mundo *mundo){
   printf("nCompostoV:%d\n",mundo->nCompostoV);
   printf ("nherois: %d\n", mundo->nherois);
   printf("\n");
+
+  struct fpnodo_t *aux;
+
+    aux = mundo->eventos->prim;
+    printf ("ID heroi | ID base : %d %d\n",((struct dado_evento *)aux->item)->dado1, ((struct dado_evento *)aux->item)->dado2);
+    printf("(%d %d)", aux->tipo, aux->prio); /*impressão para não haver espaços em branco*/
+    aux = aux->prox;
+
+    for(int i = 1; i < mundo->eventos->num; i++){
+      if (aux->tipo == EV_CHEGA)
+        printf ("ID heroi | ID base : %d %d\n",((struct dado_evento *)aux->item)->dado1, ((struct dado_evento *)aux->item)->dado2);
+        
+      else if (aux->tipo == EV_MISSAO)
+        printf ("ID missao :  %d\n",((struct dado_evento *)aux->item)->dado1);
+
+      else
+        printf ("Evento fim");
+
+      printf (" tipo | prioridade(%d %d)", aux->tipo, aux->prio);
+      printf ("\n\n");
+      aux = aux->prox;
+    } 
+
+  /*
   impr_herois (mundo);
   printf("\n");
   impr_bases (mundo);
   printf("\n");
   impr_missoes(mundo);  
+  */
 }
 
 
@@ -111,13 +136,16 @@ int main (){
   struct mundo *novo_mundo;
   //srand(0);
 
-  // inicia o mundo
+  // Cria um mundo baseado na struct mundo 
   novo_mundo = cria_mundo();
   if (!novo_mundo)
-    erro ("Não criou mundo\n"); // função
-  
-  inicia_mundo(novo_mundo);
+    erro ("Não criou mundo\n");
 
+  // Inicia os elementos da struct mundo criada
+  inicia_mundo (novo_mundo);
+  eventos_iniciais (novo_mundo);
+
+  // função de teste RETIRAR DEPOIS 
   test_impr(novo_mundo);
 
 /*
