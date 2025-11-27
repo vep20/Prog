@@ -25,7 +25,7 @@ void cria_eventos (struct mundo *m, int temp, int tipo, int d1, int d2){
     erro("Erro ao alocar estrutura de dados do evento");
 
   aux->dado1 = d1;
-  aux->dado2 = d2;
+  aux->dado2 = d2; 
 
   fprio_insere (m->eventos, aux, tipo, temp);
 }
