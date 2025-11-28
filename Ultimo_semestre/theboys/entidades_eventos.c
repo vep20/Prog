@@ -17,42 +17,65 @@ int aleat (int min, int max){
   return n_aleat;
 }
 
-void cria_eventos (struct mundo *m, int temp, int tipo, int d1, int d2){
+struct dado_evento *insere_dados (int d1, int d2){
   struct dado_evento *aux;
 
   aux = malloc (sizeof(struct dado_evento));
   if (!aux)
-    erro("Erro ao alocar estrutura de dados do evento");
+    return NULL;
 
+  // Unifica dados em uma estrutura propria
   aux->dado1 = d1;
   aux->dado2 = d2; 
 
-  fprio_insere (m->eventos, aux, tipo, temp);
+  return aux;
 }
 
 void eventos_iniciais (struct mundo *m){
   int aux_base, aux_temp; // Variaveis para armazenar valores aleatorios que irão na lef
+  struct dado_evento *aux_dados;
 
   if (!m)
-    erro ("Ponteiro para o mundo inválido!\n");
+    erro ("Ponteiro para o mundo inválido!");
 
   // Move cada heroi para uma base B nos primeiross 3 dias do mundo e preenche na LEF
   for (int i = 0; i < m->nherois; i++){
     aux_base = aleat (0, m->nbases - 1); // Utilizado por segurança o valor m->nbase 
     aux_temp = aleat (0, 4320); // Primeiros 3 dias apos criação do mundo (60*24*3)
 
-    cria_eventos (m, aux_temp, EV_CHEGA, m->herois[i].ID, aux_base);
+    aux_dados = insere_dados (m->herois[i].ID, aux_base);
+    if (!aux_dados)
+      erro("Erro ao alocar estrutura de dados do evento: herois");
+
+
+    if (fprio_insere (m->eventos, aux_dados, EV_CHEGA, aux_temp) == -1){
+      printf ("%d",m->herois[i].ID);
+      erro ("Item não inserido na fila, chegada heroi");
+    }
   }
 
   // Inicia as missoes que devem ocorrer em um instante(tempo) aleatorio, até o fim do mundo
   for (int i = 0; i < m->nmissoes; i++){
     aux_temp = aleat (0, T_FIM_DO_MUNDO);
 
-    cria_eventos (m, aux_temp, EV_MISSAO, m->missoes[i].ID, -1);// Segundo dado (d2) não utilizado agora 
+    aux_dados = insere_dados (m->missoes[i].ID, -1);// Segundo dado (d2) não utilizado agora 
+    if (!aux_dados)
+      erro("Erro ao alocar estrutura de dados do evento: missoes");
+    
+    if (fprio_insere (m->eventos, aux_dados, EV_MISSAO, aux_temp) == -1){
+      printf ("%d",m->missoes[i].ID);
+      erro ("Item não inserido na fila, criação missão"); 
+    }
+
   }
 
-  cria_eventos (m, T_FIM_DO_MUNDO, EV_FIM, -1, -1);// Insere o evento fim no fim do mundo
-  // Dados não necessarios serem preenchidos  
+  aux_dados = insere_dados (-1,-1);
+  if (!aux_dados)
+    erro("Erro ao alocar estrutura de dados do evento: fim do mundo");
+
+  if (fprio_insere (m->eventos, aux_dados, EV_FIM, T_FIM_DO_MUNDO) == -1)
+    // Dados não necessarios serem preenchidos  
+    erro ("Item não inserido na fila, fim do mundo");
 }
 
 /*

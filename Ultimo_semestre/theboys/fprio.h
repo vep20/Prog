@@ -46,7 +46,7 @@ void *fprio_retira (struct fprio_t *f, int *tipo, int *prio);
 
 // Informa o número de itens na fila.
 // Retorno: N >= 0 ou -1 se erro.
-int fprio_tamanho (struct fprio_t *f);
+int fprio_tamanho (struct fprio_t *f);	
 
 // Imprime o conteúdo da fila no formato "(tipo prio) (tipo prio) ..."
 // Para cada item deve ser impresso seu tipo e sua prioridade, com um

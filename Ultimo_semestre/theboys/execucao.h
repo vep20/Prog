@@ -7,11 +7,8 @@
 // retorna NULL em caso de erro.
 struct mundo *cria_mundo ();
 
-// Função que inicia os membros de uma struct mundo.
-void inicia_mundo (struct mundo *m);
-
 // Função que destroi e da free em um ponteiro para struct mundo.
-void destroi_mundo (struct mundo *m);
+struct mundo *destroi_mundo (struct mundo *m);
 
 // Função que preenche o vetor de herois do mundo
 int cria_herois (struct mundo *m);

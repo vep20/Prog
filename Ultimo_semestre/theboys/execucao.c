@@ -6,42 +6,33 @@ struct mundo *cria_mundo (){
     struct mundo *aux;
 
     aux = malloc (sizeof (struct mundo));
-    if (!aux){
-        erro ("Erro ao criar o mundo!\n");
+    if (!aux)
         return NULL;
-    }
-    return aux;
-}
-
-void inicia_mundo (struct mundo *m){
 
     // Valores definidos em arquivo .h
-    m->TamanhoMundo = malloc (sizeof (struct local));
-    if (!m->TamanhoMundo)
-        erro ("Erro ao alocar memoria para tamanho do mundo\n");
+    aux->TamanhoMundo.x = N_TAMANHO_MUNDO;
+    aux->TamanhoMundo.y = N_TAMANHO_MUNDO;
+    aux->relogio = T_INICIO;
+    aux->nhabilidades = N_HABILIDADES;
+    aux->nherois = N_HEROIS;
+    aux->nbases = N_BASES;
+    aux->nmissoes = N_MISSOES;
+    aux->nCompostoV = N_COMPOSTOS_V;
 
-    m->TamanhoMundo->x = N_TAMANHO_MUNDO;
-    m->TamanhoMundo->y = N_TAMANHO_MUNDO;
-    m->relogio = T_INICIO;
-    m->nhabilidades = N_HABILIDADES;
-    m->nherois = N_HEROIS;
-    m->nbases = N_BASES;
-    m->nmissoes = N_MISSOES;
-    m->nCompostoV = N_COMPOSTOS_V;
-
-    
-    if (!cria_herois (m))// Preenche vetor de herois e os membros do mesmo
+    if (!cria_herois (aux))// Preenche vetor de herois e os membros do mesmo
         printf("Erro ao criar vetor de herois, ponteiro mundo invalido!\n");
     
-    if (!cria_bases (m))// Preenche vetor de bases e os membros do mesmo
+    if (!cria_bases (aux))// Preenche vetor de bases e os membros do mesmo
         printf("Erro ao criar vetor de bases, ponteiro mundo invalido!!\n");
 
-    if (!cria_missoes (m))// Preenche vetor de missões os membros do mesmo
+    if (!cria_missoes (aux))// Preenche vetor de missões os membros do mesmo
         printf("Erro ao criar vetor de missoes, ponteiro mundo invalido!!\n"); 
     
-    m->eventos = fprio_cria ();
-    if (!m->eventos)
-        erro("Erro na criação fila de eventos");
+    aux->eventos = fprio_cria ();
+    if (!aux->eventos)
+        printf("Erro na criação fila de eventos\n");
+
+    return aux;
 }
 
 struct heroi inicia_heroi (int id){
@@ -176,20 +167,17 @@ void libera_missoes (struct mundo *m){
 
 }
 
-void destroi_mundo(struct mundo *m){
+struct mundo *destroi_mundo (struct mundo *m){
 
     if (!m) 
         erro ("Ponteiro para o mundo inválido!\n");
 
-    if (m->TamanhoMundo) 
-        free (m->TamanhoMundo);// Libera o tamanho do mundo
-    m->TamanhoMundo = NULL;
-
     libera_herois (m);// Libera os cjtos de habilidades dos herois
     libera_bases (m);// Libera ponteiros para conjunto de presentes e fila de espera
     libera_missoes (m);// Libera os cjtos de habilidades das missoes
-    fprio_destroi (m->eventos);
+    m->eventos = fprio_destroi (m->eventos);// destroi a LEF do mundo
 
     free (m);// Libera a estrutura principal
-    m = NULL;
+
+    return NULL;
 }

@@ -89,8 +89,7 @@ void test_impr (struct mundo *mundo){
   if (!mundo)
     erro("impossivel imprimir, mundo não alocado");
 
-  
-  printf("tamanho x:%d y:%d\n",mundo->TamanhoMundo->x,mundo->TamanhoMundo->y);
+  printf("tamanho x:%d y:%d\n",mundo->TamanhoMundo.x,mundo->TamanhoMundo.y);
   printf("relogio:%d\n", mundo->relogio);
   printf("nherois:%d\n",mundo->nherois);
   printf("nbases:%d\n",mundo->nbases);
@@ -100,11 +99,16 @@ void test_impr (struct mundo *mundo){
   printf ("nherois: %d\n", mundo->nherois);
   printf("\n");
 
+  if (!mundo->eventos || mundo->eventos->num == 0 || !mundo->eventos->prim) {
+    printf("Nenhum evento cadastrado.\n");
+    return;
+  }
+
   struct fpnodo_t *aux;
 
     aux = mundo->eventos->prim;
     printf ("ID heroi | ID base : %d %d\n",((struct dado_evento *)aux->item)->dado1, ((struct dado_evento *)aux->item)->dado2);
-    printf("(%d %d)", aux->tipo, aux->prio); /*impressão para não haver espaços em branco*/
+    printf (" tipo | prioridade(%d %d)\n\n", aux->tipo, aux->prio);
     aux = aux->prox;
 
     for(int i = 1; i < mundo->eventos->num; i++){
@@ -137,12 +141,11 @@ int main (){
   //srand(0);
 
   // Cria um mundo baseado na struct mundo 
+  // Inicia os elementos da struct mundo se criada
   novo_mundo = cria_mundo();
   if (!novo_mundo)
-    erro ("Não criou mundo\n");
+    erro ("Erro ao criar o mundo!\n");
 
-  // Inicia os elementos da struct mundo criada
-  inicia_mundo (novo_mundo);
   eventos_iniciais (novo_mundo);
 
   // função de teste RETIRAR DEPOIS 
@@ -159,7 +162,7 @@ int main (){
 
 */
   // destroi o mundo
-  destroi_mundo(novo_mundo);
+  novo_mundo = destroi_mundo(novo_mundo);
   return 0;
 
 }

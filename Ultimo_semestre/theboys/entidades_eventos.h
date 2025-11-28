@@ -6,12 +6,12 @@
 #include "fila.h"
 
 #define T_INICIO 0
-#define T_FIM_DO_MUNDO 50000 //525600
-#define N_TAMANHO_MUNDO 4 //20000
-#define N_HABILIDADES 4//10
+#define T_FIM_DO_MUNDO 52600//50000 //525600
+#define N_TAMANHO_MUNDO 20000//4 //20000
+#define N_HABILIDADES 10//4//10
 #define N_HEROIS N_HABILIDADES * 5 
 #define N_BASES N_HEROIS / 5 
-#define N_MISSOES 15//T_FIM_DO_MUNDO / 100
+#define N_MISSOES T_FIM_DO_MUNDO/100//15//T_FIM_DO_MUNDO / 100
 #define N_COMPOSTOS_V N_HABILIDADES * 3
 
 // Valores dos eventos para definir o tipo na LEF (fila de prioridades já criada em trabalho anterior)
@@ -58,8 +58,8 @@ struct mundo{
     struct heroi herois[N_HEROIS]; // vetor de herois 
     struct base bases[N_BASES]; // vetor de bases
     struct missao missoes[N_MISSOES]; // vetor de missoes
-    struct local *TamanhoMundo; 
     struct fprio_t *eventos;
+    struct local TamanhoMundo; // estatico pois são apenas duas coordenadas simples 
     int nherois; // numero de herois
     int nbases; // numero de bases
     int nmissoes; // numero de missões
@@ -67,6 +67,7 @@ struct mundo{
     int nCompostoV; // numero de compostos V disponiveis
     int relogio;
 };
+
 // Estrutra utilzada para auxiliar a inserer os eventos na LEF
 // Como a fprio_insere so aceita um void *item é necessario transformar esses dados 
 struct dado_evento{
@@ -80,8 +81,8 @@ void erro (char *msg);
 // Função que cria e retorna um número aleatório entre min e max
 int aleat (int min, int max);
 
-// Função para auxiliar inserir os dados na LEF
-void cria_eventos (struct mundo *m, int temp, int tipo, int d1, int d2);
+// Função para auxiliar criar dados que irão na LEF
+struct dado_evento *insere_dados (int d1, int d2);
 
 // Função que cria os eventos iniciais da simulação, para os herois, missoes e fim do mundo
 void eventos_iniciais (struct mundo *m);
