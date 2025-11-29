@@ -49,7 +49,7 @@ void eventos_iniciais (struct mundo *m){
 
 
     if (fprio_insere (m->eventos, aux_dados, EV_CHEGA, aux_temp) == -1){
-      printf ("%d",m->herois[i].ID);
+      printf ("%d\n",m->herois[i].ID);
       erro ("Item não inserido na fila, chegada heroi");
     }
   }
@@ -63,7 +63,7 @@ void eventos_iniciais (struct mundo *m){
       erro("Erro ao alocar estrutura de dados do evento: missoes");
     
     if (fprio_insere (m->eventos, aux_dados, EV_MISSAO, aux_temp) == -1){
-      printf ("%d",m->missoes[i].ID);
+      printf ("%d\n",m->missoes[i].ID);
       erro ("Item não inserido na fila, criação missão"); 
     }
 
@@ -78,8 +78,8 @@ void eventos_iniciais (struct mundo *m){
     erro ("Item não inserido na fila, fim do mundo");
 }
 
-
 void chega (struct mundo *m, int tempo, int id_heroi, int id_base){
+  struct dados_evento *aux;
   bool espera;
 
   if (!m || !m->eventos)
@@ -88,19 +88,39 @@ void chega (struct mundo *m, int tempo, int id_heroi, int id_base){
   // Atualiza base do heroi
   m->herois[id_heroi].base_atual = id_base; 
 
+  // Verifica se há vagas na base e se a fila de espera esta vazia 
+  if(cjto_card (m->bases[id_base].presentes) < m->bases[id_base].lotacao && 
+      !fila_tamanho(m->bases[id_base].espera))
+    espera = true;
+
+  // Verifica se o heroi tem paciencia pra esperar na fila
+  else
+    espera = m->herois[id_heroi].paciencia > 10 * fila_tamanho(m->bases[id_base].espera);
+
+  aux = insere_dados (id_heroi, id_base);
+  if (!aux)
+    erro("Erro ao alocar estrutura de dados do evento: chegada");
   
-// se h´a vagas em B e a fila de espera em B est´a vazia:
-  // espera = true
-// sen~ao:
-  // espera = (paci^encia de H) > (10 * tamanho da fila em B)
+  // Mensagem de saida principal do evento
+  printf("%6d: CHEGA  HEROI %2d BASE %d (%2d/%2d) ", 
+    tempo, id_heroi, id_base, cjto_card (m->bases[id_base].presentes), m->bases[id_base].lotacao);
 
-// se espera:
-  // cria e insere na LEF o evento ESPERA (agora, H, B)
-// sen~ao:
-  // cria e insere na LEF o evento DESISTE (agora, H, B)
-
-// Importante: A Lista de Eventos Futuros (LEF) pode ser implementada
-// usando o TAD “fila de prioridades” previamente implementado.
+  if (espera){
+    // Insere e verifica o evento na LEF
+    if (fprio_insere (m->eventos, aux, EV_ESPERA, tempo) == -1){
+      printf ("%d\n",m->herois[id_heroi].ID);
+      erro ("Item não inserido na fila no evento chegada"); 
+    }
+    printf("ESPERA\n");
+  }
+  
+  else{
+    if (fprio_insere (m->eventos, aux, EV_DESISTE, tempo) == -1){
+      printf ("%d\n",m->herois[id_heroi].ID);
+      erro ("Item não inserido na fila no evento chegada"); 
+    }
+    printf("DESISTE\n");
+  }
 }
 
 /*
