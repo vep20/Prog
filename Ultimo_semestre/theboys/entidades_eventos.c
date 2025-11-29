@@ -36,7 +36,7 @@ void eventos_iniciais (struct mundo *m){
   struct dado_evento *aux_dados;
 
   if (!m)
-    erro ("Ponteiro para o mundo inválido!");
+    erro ("Ponteiro para o mundo inválido em eventos iniciais!");
 
   // Move cada heroi para uma base B nos primeiross 3 dias do mundo e preenche na LEF
   for (int i = 0; i < m->nherois; i++){
@@ -78,11 +78,17 @@ void eventos_iniciais (struct mundo *m){
     erro ("Item não inserido na fila, fim do mundo");
 }
 
-/*
-void chega (int tempo, struct heroi h, struct base b){
 
-// atualiza base de H
+void chega (struct mundo *m, int tempo, int id_heroi, int id_base){
+  bool espera;
 
+  if (!m || !m->eventos)
+    erro ("Ponteiro para o mundo ou evento inválido em evento chega!");
+
+  // Atualiza base do heroi
+  m->herois[id_heroi].base_atual = id_base; 
+
+  
 // se h´a vagas em B e a fila de espera em B est´a vazia:
   // espera = true
 // sen~ao:
@@ -97,6 +103,7 @@ void chega (int tempo, struct heroi h, struct base b){
 // usando o TAD “fila de prioridades” previamente implementado.
 }
 
+/*
 void espera (int tempo, struct heroi h, struct base b){
   
 // adiciona H ao fim da fila de espera de B

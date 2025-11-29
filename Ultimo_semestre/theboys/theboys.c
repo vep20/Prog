@@ -154,7 +154,7 @@ int main (){
 /*
   // executa o laço de simulação
   while (novo_mundo->relogio < T_FIM_DO_MUNDO){
-
+    
     
 
     novo_mundo->relogio++;

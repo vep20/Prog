@@ -6,12 +6,12 @@
 #include "fila.h"
 
 #define T_INICIO 0
-#define T_FIM_DO_MUNDO 52600//50000 //525600
-#define N_TAMANHO_MUNDO 20000//4 //20000
-#define N_HABILIDADES 10//4//10
+#define T_FIM_DO_MUNDO 50000 //525600
+#define N_TAMANHO_MUNDO 20000
+#define N_HABILIDADES 10
 #define N_HEROIS N_HABILIDADES * 5 
 #define N_BASES N_HEROIS / 5 
-#define N_MISSOES T_FIM_DO_MUNDO/100//15//T_FIM_DO_MUNDO / 100
+#define N_MISSOES T_FIM_DO_MUNDO / 100  
 #define N_COMPOSTOS_V N_HABILIDADES * 3
 
 // Valores dos eventos para definir o tipo na LEF (fila de prioridades já criada em trabalho anterior)
@@ -59,7 +59,7 @@ struct mundo{
     struct base bases[N_BASES]; // vetor de bases
     struct missao missoes[N_MISSOES]; // vetor de missoes
     struct fprio_t *eventos;
-    struct local TamanhoMundo; // estatico pois são apenas duas coordenadas simples 
+    struct local TamanhoMundo; // estatico, pois são apenas duas coordenadas simples 
     int nherois; // numero de herois
     int nbases; // numero de bases
     int nmissoes; // numero de missões
@@ -87,12 +87,13 @@ struct dado_evento *insere_dados (int d1, int d2);
 // Função que cria os eventos iniciais da simulação, para os herois, missoes e fim do mundo
 void eventos_iniciais (struct mundo *m);
 
-/*
+
 // Função que Representa um herói H chegando em uma base
 // B no instante T. Ao chegar, o herói analisa o tamanho 
 // da fila e decide se espera para entrar ou desiste
-void chega (int tempo, struct heroi h, struct base b);
+void chega (struct mundo *m, int tempo, int heroi, int base);
 
+/*
 // Função onde um herói H entra na fila de espera da base B. 
 // Assim que H entrar na fila, o porteiro da base B deve ser 
 // avisado para verificar a fila
