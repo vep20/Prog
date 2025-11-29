@@ -31,6 +31,25 @@ struct dado_evento *insere_dados (int d1, int d2){
   return aux;
 }
 
+void seleciona_evento (struct mundo *m, struct dado_evento *dados, int tipo_ev){
+
+  switch (tipo_ev){
+
+    case EV_CHEGA :
+      // Dado1 = ID heroi, Dado 2 = ID base
+      chega(m, m->relogio, dados->dado1, dados->dado2);
+      break;
+    
+    default:
+      // Mensagem teste para eventos ainda não criados, retirar apos conclusão do trabalho 
+      printf("Evento ainda não criado (Tipo: %d) (Tempo: %d)\n", tipo_ev, m->relogio);
+      break;
+  }
+
+  // strutura dados livre para haver vazamento de memorias 
+  free(dados);
+}
+
 void eventos_iniciais (struct mundo *m){
   int aux_base, aux_temp; // Variaveis para armazenar valores aleatorios que irão na lef
   struct dado_evento *aux_dados;
@@ -79,14 +98,14 @@ void eventos_iniciais (struct mundo *m){
 }
 
 void chega (struct mundo *m, int tempo, int id_heroi, int id_base){
-  struct dados_evento *aux;
+  struct dado_evento *aux;
   bool espera;
 
   if (!m || !m->eventos)
     erro ("Ponteiro para o mundo ou evento inválido em evento chega!");
 
   // Atualiza base do heroi
-  m->herois[id_heroi].base_atual = id_base; 
+  m->herois->ID_base = id_base; 
 
   // Verifica se há vagas na base e se a fila de espera esta vazia 
   if(cjto_card (m->bases[id_base].presentes) < m->bases[id_base].lotacao && 

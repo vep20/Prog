@@ -27,12 +27,12 @@
 #define EV_FIM     9
 
 struct heroi{
-    struct base *base_atual;
     struct cjto_t *habilidades;
     int ID;
     int paciencia;
     int velocidade;
     int experiencia;
+    int ID_base;
 };
 
 struct local{
@@ -87,11 +87,13 @@ struct dado_evento *insere_dados (int d1, int d2);
 // Função que cria os eventos iniciais da simulação, para os herois, missoes e fim do mundo
 void eventos_iniciais (struct mundo *m);
 
-
 // Função que Representa um herói H chegando em uma base
 // B no instante T. Ao chegar, o herói analisa o tamanho 
 // da fila e decide se espera para entrar ou desiste
 void chega (struct mundo *m, int tempo, int heroi, int base);
+
+// Função que seleciona qual evento será executado conforme a LEF
+void seleciona_evento (struct mundo *m, struct dado_evento *dados, int tipo_ev);
 
 /*
 // Função onde um herói H entra na fila de espera da base B. 

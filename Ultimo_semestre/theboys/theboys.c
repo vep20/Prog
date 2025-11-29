@@ -138,6 +138,8 @@ void test_impr (struct mundo *mundo){
 
 int main (){
   struct mundo *novo_mundo;
+  struct dado_evento *ev;
+  int tipo, tempo;
   //srand(0);
 
   // Cria um mundo baseado na struct mundo 
@@ -149,20 +151,27 @@ int main (){
   eventos_iniciais (novo_mundo);
 
   // função de teste RETIRAR DEPOIS 
-  test_impr(novo_mundo);
+  //test_impr(novo_mundo);
 
-/*
-  // executa o laço de simulação
+
+  // Executa o laço de simulação
   while (novo_mundo->relogio < T_FIM_DO_MUNDO){
-    
-    
 
-    novo_mundo->relogio++;
+    // Variaveis tipo e tempo retornam valores com função fprio_retira
+    // fprio_retira possui retorno generico
+    ev = fprio_retira(novo_mundo->eventos, &tipo, &tempo);
+
+    // Caso não haja mais nada na LEF
+    if (!ev)
+      break;
+
+    // Atualiza o relógio conforme tempo de evento
+    novo_mundo->relogio = tempo;
+
+    seleciona_evento(novo_mundo, ev, tipo);
   }
 
-*/
   // destroi o mundo
   novo_mundo = destroi_mundo(novo_mundo);
   return 0;
-
 }
