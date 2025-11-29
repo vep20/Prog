@@ -144,7 +144,7 @@ int main (){
   // Inicia os elementos da struct mundo se criada
   novo_mundo = cria_mundo();
   if (!novo_mundo)
-    erro ("Erro ao criar o mundo!\n");
+    erro ("Erro ao criar o mundo!");
 
   eventos_iniciais (novo_mundo);
 

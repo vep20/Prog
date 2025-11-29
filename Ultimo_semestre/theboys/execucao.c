@@ -18,19 +18,18 @@ struct mundo *cria_mundo (){
     aux->nbases = N_BASES;
     aux->nmissoes = N_MISSOES;
     aux->nCompostoV = N_COMPOSTOS_V;
-
-    if (!cria_herois (aux))// Preenche vetor de herois e os membros do mesmo
-        printf("Erro ao criar vetor de herois, ponteiro mundo invalido!\n");
     
-    if (!cria_bases (aux))// Preenche vetor de bases e os membros do mesmo
-        printf("Erro ao criar vetor de bases, ponteiro mundo invalido!!\n");
-
-    if (!cria_missoes (aux))// Preenche vetor de missões os membros do mesmo
-        printf("Erro ao criar vetor de missoes, ponteiro mundo invalido!!\n"); 
-    
+    // Alocação criada antes, para não precisar limpar os outro elementos posteriormente
     aux->eventos = fprio_cria ();
-    if (!aux->eventos)
-        printf("Erro na criação fila de eventos\n");
+    if (!aux->eventos){
+        printf ("Erro na criação fila de eventos\n");
+        free (aux); // Função deve ser encerrada, por isso aux deve ser liberado
+        return NULL;
+    }
+
+    cria_herois (aux);// Preenche vetor de herois e os membros do mesmo    
+    cria_bases (aux);// Preenche vetor de bases e os membros do mesmo
+    cria_missoes (aux);// Preenche vetor de missões os membros do mesmo
 
     return aux;
 }
@@ -50,8 +49,6 @@ struct heroi inicia_heroi (int id){
     // Cria novo conjunto com cap max = numero maximo de habilidades disponiveis para se ter
     // no mundo. Preenche cada heroi com as "n" qtds habilidades sorteadas.
     // Obs. cjto_aleat não repete habilidades, por isso não é preciso testar
-    if (!novo_heroi.habilidades)
-        erro ("Erro ao criar conjunto de habilidades para o herói\n");
    
     return novo_heroi;
 }
@@ -61,9 +58,12 @@ int cria_herois (struct mundo *m){
     if (!m)
         return 0;
 
-    for (int i = 0; i < m->nherois; i++)
+    for (int i = 0; i < m->nherois; i++){
         m->herois[i] = inicia_heroi (i);
-    
+        
+        if (!m->herois[i].habilidades)
+            erro ("Erro ao criar conjunto de habilidades para um herói");
+    }
     return 1; 
 }
 
@@ -78,12 +78,8 @@ struct base inicia_base (int id){
     nova_base.presentes = cjto_cria (nova_base.lotacao);
     // Conjunto vazio (com capacidade para armazenar IDs 
     // de heróis até a lotação da base)
-    if (!nova_base.presentes)
-        erro ("Erro ao criar conjunto de presentes da base\n");
 
     nova_base.espera = fila_cria();
-    if (!nova_base.espera)
-        erro ("Erro ao criar a fila de espera na base!\n");
 
     return nova_base;
 }
@@ -93,9 +89,15 @@ int cria_bases (struct mundo *m){
     if (!m)
         return 0;
 
-    for (int i = 0; i < m->nbases; i++)
+    for (int i = 0; i < m->nbases; i++){
         m->bases[i] = inicia_base (i);
-  
+
+        if (!m->bases[i].presentes)
+            erro ("Erro ao criar conjunto de presentes da base");
+        
+        else if (!m->bases[i].espera)
+            erro ("Erro ao criar a fila de espera na base!");
+    }  
     return 1;
 }
 
@@ -112,8 +114,6 @@ struct missao inicia_missao (int id){
     // Cria novo conjunto com cap max = numero maximo de habilidades disponiveis para se ter
     // no mundo. Preenche cada base com as "n" qtds habilidades sorteadas.
     // Obs. cjto_aleat não repete habilidades, por isso não é preciso testar
-    if (!nova_missao.habilidades)
-        erro("Erro ao criar o conjunto de habilidades na missão!\n");
 
     return nova_missao;
 }
@@ -123,8 +123,12 @@ int cria_missoes (struct mundo *m){
     if (!m)
         return 0;
 
-    for (int i = 0; i < m->nmissoes; i++)
+    for (int i = 0; i < m->nmissoes; i++){
         m->missoes[i] = inicia_missao (i);
+
+        if (!m->missoes[i].habilidades)
+            erro("Erro ao criar o conjunto de habilidades na missão!");
+    }
     
     return 1;
 }
@@ -132,7 +136,7 @@ int cria_missoes (struct mundo *m){
 void libera_herois (struct mundo *m){
 
     if (!m->herois)
-        erro ("Vetor de herois vazio");
+        return;
 
     // Percorre o vetor até a quantidade de herois ainda presentes no mundo
     for (int i = 0; i < m->nherois; i++)
@@ -144,7 +148,7 @@ void libera_herois (struct mundo *m){
 void libera_bases (struct mundo *m){
 
     if(!m->bases)
-        erro("Vetor de bases vazio");
+        return;
 
     for (int i = 0; i < m->nbases; i++){
         if (m->bases[i].presentes)// Verifica se há conjunto de presentes e os destroi 
@@ -158,7 +162,7 @@ void libera_bases (struct mundo *m){
 void libera_missoes (struct mundo *m){
 
     if (!m->missoes)
-        erro ("Vetor de missoes vazio");
+        return;
 
     // Percorre o vetor até a quantidade de herois ainda presentes no mundo
     for (int i = 0; i < m->nmissoes; i++)
@@ -170,7 +174,7 @@ void libera_missoes (struct mundo *m){
 struct mundo *destroi_mundo (struct mundo *m){
 
     if (!m) 
-        erro ("Ponteiro para o mundo inválido!\n");
+        return NULL;
 
     libera_herois (m);// Libera os cjtos de habilidades dos herois
     libera_bases (m);// Libera ponteiros para conjunto de presentes e fila de espera
