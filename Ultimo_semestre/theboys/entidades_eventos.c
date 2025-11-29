@@ -39,15 +39,23 @@ void seleciona_evento (struct mundo *m, struct dado_evento *dados, int tipo_ev){
       // Dado1 = ID heroi, Dado 2 = ID base
       chega(m, m->relogio, dados->dado1, dados->dado2);
       break;
+
+    case EV_ESPERA :
+      espera(m, m->relogio, dados->dado1, dados->dado2);
+      break;
     
-    default:
+    case EV_DESISTE :
+      desiste(m, m->relogio, dados->dado1, dados->dado2);
+      break;
+    
+      default:
       // Mensagem teste para eventos ainda não criados, retirar apos conclusão do trabalho 
-      printf("Evento ainda não criado (Tipo: %d) (Tempo: %d)\n", tipo_ev, m->relogio);
+      printf ("%6d: Evento (Tipo: %d) ainda não criado\n", m->relogio, tipo_ev);
       break;
   }
 
   // strutura dados livre para haver vazamento de memorias 
-  free(dados);
+  free (dados);
 }
 
 void eventos_iniciais (struct mundo *m){
@@ -65,7 +73,6 @@ void eventos_iniciais (struct mundo *m){
     aux_dados = insere_dados (m->herois[i].ID, aux_base);
     if (!aux_dados)
       erro("Erro ao alocar estrutura de dados do evento: herois");
-
 
     if (fprio_insere (m->eventos, aux_dados, EV_CHEGA, aux_temp) == -1){
       printf ("%d\n",m->herois[i].ID);
@@ -85,12 +92,11 @@ void eventos_iniciais (struct mundo *m){
       printf ("%d\n",m->missoes[i].ID);
       erro ("Item não inserido na fila, criação missão"); 
     }
-
   }
 
   aux_dados = insere_dados (-1,-1);
   if (!aux_dados)
-    erro("Erro ao alocar estrutura de dados do evento: fim do mundo");
+    erro ("Erro ao alocar estrutura de dados do evento: fim do mundo");
 
   if (fprio_insere (m->eventos, aux_dados, EV_FIM, T_FIM_DO_MUNDO) == -1)
     // Dados não necessarios serem preenchidos  
@@ -108,7 +114,7 @@ void chega (struct mundo *m, int tempo, int id_heroi, int id_base){
   m->herois->ID_base = id_base; 
 
   // Verifica se há vagas na base e se a fila de espera esta vazia 
-  if(cjto_card (m->bases[id_base].presentes) < m->bases[id_base].lotacao && 
+  if (cjto_card (m->bases[id_base].presentes) < m->bases[id_base].lotacao && 
       !fila_tamanho(m->bases[id_base].espera))
     espera = true;
 
@@ -118,50 +124,65 @@ void chega (struct mundo *m, int tempo, int id_heroi, int id_base){
 
   aux = insere_dados (id_heroi, id_base);
   if (!aux)
-    erro("Erro ao alocar estrutura de dados do evento: chegada");
+    erro ("Erro ao alocar estrutura de dados do evento: chegada");
   
   // Mensagem de saida principal do evento
-  printf("%6d: CHEGA  HEROI %2d BASE %d (%2d/%2d) ", 
+  printf ("%6d: CHEGA  HEROI %2d BASE %d (%2d/%2d) ", 
     tempo, id_heroi, id_base, cjto_card (m->bases[id_base].presentes), m->bases[id_base].lotacao);
 
   if (espera){
     // Insere e verifica o evento na LEF
-    if (fprio_insere (m->eventos, aux, EV_ESPERA, tempo) == -1){
-      printf ("%d\n",m->herois[id_heroi].ID);
+    if (fprio_insere (m->eventos, aux, EV_ESPERA, tempo) == -1)
       erro ("Item não inserido na fila no evento chegada"); 
-    }
-    printf("ESPERA\n");
+
+    printf ("ESPERA\n");
   }
   
   else{
-    if (fprio_insere (m->eventos, aux, EV_DESISTE, tempo) == -1){
-      printf ("%d\n",m->herois[id_heroi].ID);
+    if (fprio_insere (m->eventos, aux, EV_DESISTE, tempo) == -1)
       erro ("Item não inserido na fila no evento chegada"); 
-    }
-    printf("DESISTE\n");
+
+    printf ("DESISTE\n");
   }
 }
 
-/*
-void espera (int tempo, struct heroi h, struct base b){
+void espera (struct mundo *m, int tempo, int id_heroi, int id_base){
+  struct dado_evento *aux;
+
+  if (!m || !m->eventos || !m->bases[id_base].espera)
+    erro ("Ponteiro para o mundo, evento ou fila de espera da base inválido em evento espera!");
   
-// adiciona H ao fim da fila de espera de B
-// cria e insere na LEF o evento AVISA (agora, B)
+  // Adiciona ID do heroi ao fim da fila de espera da base
+  if (!fila_insere(m->bases[id_base].espera, id_heroi))
+    erro("Item não inserido na fila de espera na base no evento espera");
+    
+  // cria e insere na LEF o evento AVISA (agora, B)
+  aux = insere_dados (id_heroi, id_base);
+  if (!aux)
+    erro("Erro ao alocar estrutura de dados do evento: espera");
 
-// Importante: A fila de espera de cada base pode ser implementada usando
-// o TAD “lista de inteiros” previamente implementado.
+  // Insere e verifica o evento na LEF
+  if (fprio_insere (m->eventos, aux, EV_AVISA, tempo) == -1)
+    erro ("Item não inserido na fila no evento espera"); 
+
+  // Mensagem de saida principal do evento
+  printf ("%6d: ESPERA HEROI %2d BASE %d (%2d)\n", tempo, id_heroi, id_base, 
+    fila_tamanho(m->bases[id_base].espera) - 1);
 }
+  
+void desiste (struct mundo *m, int tempo, int id_heroi, int id_base){
 
-void desiste (int tempo, struct heroi h, struct base b){
-// O her´oi H desiste de entrar na base B, escolhe uma base aleat´oria D e viaja
-// para l´a:
 
-// DESISTE (T, H, B):
-// escolhe uma base destino D aleat´oria
-
-// cria e insere na LEF o evento VIAJA (agora, H, D)
+  // O her´oi H desiste de entrar na base B, escolhe uma base aleat´oria D e viaja
+  // para l´a:
+  
+  // DESISTE (T, H, B):
+  // escolhe uma base destino D aleat´oria
+  
+  // cria e insere na LEF o evento VIAJA (agora, H, D)
 }
-
+  
+/*
 void avisa (int tempo, struct base b){
 // enquanto houver vaga em B e houver her´ois esperando na fila:
   // retira primeiro her´oi (H’) da fila de B

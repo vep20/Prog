@@ -87,24 +87,24 @@ struct dado_evento *insere_dados (int d1, int d2);
 // Função que cria os eventos iniciais da simulação, para os herois, missoes e fim do mundo
 void eventos_iniciais (struct mundo *m);
 
+// Função que seleciona qual evento será executado conforme a LEF
+void seleciona_evento (struct mundo *m, struct dado_evento *dados, int tipo_ev);
+
 // Função que Representa um herói H chegando em uma base
 // B no instante T. Ao chegar, o herói analisa o tamanho 
 // da fila e decide se espera para entrar ou desiste
 void chega (struct mundo *m, int tempo, int heroi, int base);
 
-// Função que seleciona qual evento será executado conforme a LEF
-void seleciona_evento (struct mundo *m, struct dado_evento *dados, int tipo_ev);
-
-/*
 // Função onde um herói H entra na fila de espera da base B. 
 // Assim que H entrar na fila, o porteiro da base B deve ser 
 // avisado para verificar a fila
-void espera (int tempo, struct heroi h, struct base b);
+void espera (struct mundo *m, int tempo, int id_heroi, int id_base);
 
 // Função onde um herói H desiste de entrar na base B, escolhe 
 // uma base aleatória D e viaja para lá
-void desiste (int tempo, struct heroi h, struct base b);
+void desiste (struct mundo *m, int tempo, int id_heroi, int id_base);
 
+/*
 // Função onde o porteiro da base B trata a fila de espera
 void avisa (int tempo, struct base b);
 

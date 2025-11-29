@@ -96,7 +96,7 @@ int cria_bases (struct mundo *m){
         if (!m->bases[i].presentes)
             erro ("Erro ao criar conjunto de presentes da base");
         
-        else if (!m->bases[i].espera)
+        if (!m->bases[i].espera)
             erro ("Erro ao criar a fila de espera na base!");
     }  
     return 1;

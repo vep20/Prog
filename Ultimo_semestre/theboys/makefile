@@ -24,7 +24,7 @@ $(MAIN).o: $(MAIN).c $(HDR)
 fila.o: fila.c fila.h
 fprio.o: fprio.c fprio.h
 execucao.o: execucao.c execucao.h
-entidades_eventos: entidades_eventos.c entidades_eventos.h
+entidades_eventos.o: entidades_eventos.c entidades_eventos.h
 
 # executar
 run: $(MAIN)

@@ -120,7 +120,8 @@ void fprio_imprime (struct fprio_t *f){
     if (!f || !f->num)
         return;
 
-    aux = f->prim;
+    aux = f->prim;void desiste (struct mundo *m, int tempo, int id_heroi, int id_base);
+
     printf("(%d %d)", aux->tipo, aux->prio); /*impressão para não haver espaços em branco*/
     aux = aux->prox;
     for(int i = 1; i < f->num; i++){
