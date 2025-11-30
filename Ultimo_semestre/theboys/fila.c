@@ -91,11 +91,13 @@ void fila_imprime(struct fila_t *f) {
         return;
 
     aux = f->prim;
-    printf("(%d)", aux->item);  //imprime o item
+    printf("%2d", aux->item);
+    //printf("(%d)", aux->item);  //imprime o item
     aux = aux->prox;
 
     while (aux) {
-        printf(" (%d)", aux->item);
+        printf(" %2d", aux->item);
+        //printf(" (%d)", aux->item);
         aux = aux->prox;
     }
 }

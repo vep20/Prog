@@ -104,28 +104,28 @@ void espera (struct mundo *m, int tempo, int id_heroi, int id_base);
 // uma base aleatória D e viaja para lá
 void desiste (struct mundo *m, int tempo, int id_heroi, int id_base);
 
-/*
 // Função onde o porteiro da base B trata a fila de espera
-void avisa (int tempo, struct base b);
+void avisa (struct mundo *m, int tempo, int id_heroi, int id_base);
 
+/*
 // Função onde um herói H entra na base B. Ao entrar, o herói 
 // decide quanto tempo vai ficar e agenda sua saída da base
-void entra (int tempo, struct heroi h, struct base b);
+void entra (struct mundo *m, int tempo, int id_heroi, int id_base);
 
 // Função onde um herói H sai da base B. Ao sair, escolhe uma base
 // de destino para viajar; o porteiro de B é avisado, pois uma vaga
 // foi liberada:
-void sai (int tempo, struct heroi h, struct base b);
+void sai (struct mundo *m, int tempo, int id_heroi, int id_base);
 
 // Função onde o herói H se desloca para uma base D 
 // (que pode ser a mesma onde já está):
-void viaja (int tempo, struct heroi h, struct base d);
+void viaja (struct mundo *m, int tempo, int id_heroi, int id_base);
 
 // Função onde o herói H morre no instante T. OBS:
 // - O herói é retirado da base B e libera uma vaga na base.
 // - O porteiro de B deve ser avisado da nova vaga.
 // - Eventos futuros de um herói morto devem ser ignorados.
-void morre (int tempo, struct heroi h, struct base b);
+void morre (struct mundo *m, int tempo, int id_heroi, int id_base);
 
 // Função onde uma missão M é disparada no instante T. São características de uma missão:
 // - Cada missão ocorre em um local aleatório e requer um conjunto aleatório de 
@@ -138,11 +138,11 @@ void morre (int tempo, struct heroi h, struct base b);
 // - Ao completar uma missão, os heróis da equipe escolhida ganham pontos de experiência.
 // - Um herói pode morrer ao participar de uma missão. :NEW:
 // - Se uma missão não puder ser completada, ela é marcada como “impossível” e adiada de 24 horas.
-void missoes (int tempo, struct missao m);
+void missoes (struct mundo *m, int tempo, int id_heroi, int id_base);struct missao m);
 
 // Função onde se encerra a simulação, gerando um relatório com informações sobre heróis, 
 // bases e missões.
-void fim (int tempo);
+void fim (struct mundo *m, int tempo, int id_heroi, int id_base);
 */
 
 #endif

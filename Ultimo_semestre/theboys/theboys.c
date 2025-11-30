@@ -9,7 +9,7 @@
 int main (){
   struct mundo *novo_mundo;
   struct dado_evento *ev;
-  int tipo, tempo;
+  int tipo_ev, tempo;
   //srand(0);
 
   // Cria um mundo baseado na struct mundo 
@@ -26,7 +26,7 @@ int main (){
 
     // Variaveis tipo e tempo retornam valores com função fprio_retira
     // fprio_retira possui retorno generico
-    ev = fprio_retira(novo_mundo->eventos, &tipo, &tempo);
+    ev = fprio_retira(novo_mundo->eventos, &tipo_ev, &tempo);
 
     // Caso não haja mais nada na LEF
     if (!ev)
@@ -35,7 +35,7 @@ int main (){
     // Atualiza o relógio conforme tempo de evento
     novo_mundo->relogio = tempo;
 
-    seleciona_evento(novo_mundo, ev, tipo);
+    seleciona_evento(novo_mundo, ev, tipo_ev);
   }
 
   // destroi o mundo

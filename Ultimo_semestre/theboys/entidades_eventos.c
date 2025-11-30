@@ -37,18 +37,22 @@ void seleciona_evento (struct mundo *m, struct dado_evento *dados, int tipo_ev){
 
     case EV_CHEGA :
       // Dado1 = ID heroi, Dado 2 = ID base
-      chega(m, m->relogio, dados->dado1, dados->dado2);
+      chega (m, m->relogio, dados->dado1, dados->dado2);
       break;
 
     case EV_ESPERA :
-      espera(m, m->relogio, dados->dado1, dados->dado2);
+      espera (m, m->relogio, dados->dado1, dados->dado2);
       break;
     
     case EV_DESISTE :
-      desiste(m, m->relogio, dados->dado1, dados->dado2);
+      desiste (m, m->relogio, dados->dado1, dados->dado2);
       break;
     
-      default:
+    case EV_AVISA :
+      avisa (m, m->relogio, dados->dado1, dados->dado2);
+      break;
+
+    default:
       // Mensagem teste para eventos ainda não criados, retirar apos conclusão do trabalho 
       printf ("%6d: Evento (Tipo: %d) ainda não criado\n", m->relogio, tipo_ev);
       break;
@@ -108,10 +112,13 @@ void chega (struct mundo *m, int tempo, int id_heroi, int id_base){
   bool espera;
 
   if (!m || !m->eventos)
-    erro ("Ponteiro para o mundo ou evento inválido em evento chega!");
+    erro ("Ponteiro para o mundo, evento inválido em evento chega");
+
+  if (!m->bases[id_base].presentes || !m->bases[id_base].espera)
+    erro ("Ponteiro cjto presente ou fila de espera da base invalido em evento chega");
 
   // Atualiza base do heroi
-  m->herois->ID_base = id_base; 
+  m->herois[id_heroi].ID_base = id_base; 
 
   // Verifica se há vagas na base e se a fila de espera esta vazia 
   if (cjto_card (m->bases[id_base].presentes) < m->bases[id_base].lotacao && 
@@ -149,19 +156,21 @@ void chega (struct mundo *m, int tempo, int id_heroi, int id_base){
 void espera (struct mundo *m, int tempo, int id_heroi, int id_base){
   struct dado_evento *aux;
 
-  if (!m || !m->eventos || !m->bases[id_base].espera)
-    erro ("Ponteiro para o mundo, evento ou fila de espera da base inválido em evento espera!");
+  if (!m || !m->eventos)
+    erro ("Ponteiro para o mundo ou evento fila de espera da base inválido em evento espera");
   
+  if (!m->bases[id_base].espera)
+    erro ("Ponteiro para fila de espera da base inválido em evento espera");
+
   // Adiciona ID do heroi ao fim da fila de espera da base
   if (!fila_insere(m->bases[id_base].espera, id_heroi))
-    erro("Item não inserido na fila de espera na base no evento espera");
+    erro ("Item não inserido na fila de espera na base no evento espera");
     
-  // cria e insere na LEF o evento AVISA (agora, B)
+  // Cria e insere na LEF o evento AVISA
   aux = insere_dados (id_heroi, id_base);
   if (!aux)
-    erro("Erro ao alocar estrutura de dados do evento: espera");
+    erro ("Erro ao alocar estrutura de dados do evento: espera");
 
-  // Insere e verifica o evento na LEF
   if (fprio_insere (m->eventos, aux, EV_AVISA, tempo) == -1)
     erro ("Item não inserido na fila no evento espera"); 
 
@@ -169,48 +178,89 @@ void espera (struct mundo *m, int tempo, int id_heroi, int id_base){
   printf ("%6d: ESPERA HEROI %2d BASE %d (%2d)\n", tempo, id_heroi, id_base, 
     fila_tamanho(m->bases[id_base].espera) - 1);
 }
-  
+
 void desiste (struct mundo *m, int tempo, int id_heroi, int id_base){
+  struct dado_evento *aux;
+  int base_destino;
 
+  if (!m || !m->eventos)
+    erro ("Ponteiro para o mundo ou evento fila de espera da base inválido em evento desiste");
 
-  // O her´oi H desiste de entrar na base B, escolhe uma base aleat´oria D e viaja
-  // para l´a:
+  // Define um valor aleatorio para identificar a base que heroi irá
+  base_destino = aleat(0, m->nbases - 1);
   
-  // DESISTE (T, H, B):
-  // escolhe uma base destino D aleat´oria
+  // Cria e insere na LEF o evento VIAJA para base destino
+  aux = insere_dados (id_heroi, base_destino);
+  if (!aux)
+    erro("Erro ao alocar estrutura de dados do evento: desiste");
   
-  // cria e insere na LEF o evento VIAJA (agora, H, D)
+  if (fprio_insere (m->eventos, aux, EV_VIAJA, tempo) == -1)
+    erro ("Item não inserido na fila no evento desiste"); 
+
+  printf ("%6d: DESIST HEROI %2d BASE %d\n", tempo, id_heroi, id_base);
+}
+  
+void avisa (struct mundo *m, int tempo, int id_heroi, int id_base){
+  struct dado_evento *aux;
+
+  if (!m || !m->eventos)
+    erro ("Ponteiro para o mundo ou evento fila de espera da base inválido em evento avisa");
+
+  if (!m->bases[id_base].espera)
+    erro ("Ponteiro para fila de espera da base inválido em evento avisa");
+
+  printf ("%6d: AVISA  PORTEIRO BASE %d (%2d/%2d) FILA [ ", tempo, id_base,
+    cjto_card (m->bases[id_base].presentes), m->bases[id_base].lotacao);
+  
+  // Teste já realizado
+  fila_imprime(m->bases[id_base].espera);
+  printf (" ]\n");
+
+  while (cjto_card (m->bases[id_base].presentes) < m->bases[id_base].lotacao && 
+    fila_tamanho(m->bases[id_base].espera)){
+    
+    // Retira primeiro heroi da fila de espera da base
+    if (!fila_retira (m->bases[id_base].espera, &id_heroi))
+      erro ("Heroi não retirado em evento avisa");
+    
+    // Insere herois no conjunto de presentes na base 
+    if (cjto_insere(m->bases[id_base].presentes, id_heroi) == -1)
+      erro ("Heroi não inserido no conjunto de presentes na base");
+
+    printf ("%6d: AVISA  PORTEIRO BASE %d ADMITE %2d\n", tempo, id_base, id_heroi);
+
+    aux = insere_dados (id_heroi, id_base);
+    if (!aux)
+      erro("Erro ao alocar estrutura de dados do evento: avisa");
+    
+    // Adiciona heroi ao conjunto de herois presentes na base
+    if (fprio_insere (m->eventos, aux, EV_ENTRA, tempo) == -1)
+      erro ("Item não inserido na fila no evento avisa");   
+  }
 }
   
 /*
-void avisa (int tempo, struct base b){
-// enquanto houver vaga em B e houver her´ois esperando na fila:
-  // retira primeiro her´oi (H’) da fila de B
-  // adiciona H’ ao conjunto de her´ois presentes em B
-  // cria e insere na LEF o evento ENTRA (agora, H’, B)
-}
-
-void entra (int tempo, struct heroi h, struct base b){
+void entra (struct mundo *m, int tempo, int id_heroi, int id_base){
 // calcula TPB = tempo de perman^encia na base:
   // TPB = 15 + paci^encia de H * aleat´orio [1...20]
 // cria e insere na LEF o evento SAI (agora + TPB, H, B)
 }
 
-void sai (int tempo, struct heroi h, struct base b){
+void sai (struct mundo *m, int tempo, int id_heroi, int id_base){
 // retira H do conjunto de her´ois presentes em B
 // escolhe uma base destino D aleat´oria
 // cria e insere na LEF o evento VIAJA (agora, H, D)
 // cria e insere na LEF o evento AVISA (agora, B)
 }
 
-void viaja (int tempo, struct heroi h, struct base d){
+void viaja (struct mundo *m, int tempo, int id_heroi, int id_base) struct heroi h, struct base d){
 // calcula dura¸c~ao da viagem:
   // dist^ancia = dist^ancia cartesiana entre a base atual de H e a base D
   // dura¸c~ao = dist^ancia / velocidade de H
-// cria e insere na LEF o evento CHEGA (agora + dura¸c~ao, H, D)
+// cria e insere na LEF o evento CHEGA (agora + dura¸c~ao, H, D)X
 }
 
-void morre (int tempo, struct heroi h, struct base b){
+void morre (struct mundo *m, int tempo, int id_heroi, int id_base){
 // O her´oi H morre no instante T.
 // • O her´oi ´e retirado da base B e libera uma vaga na base.
 // • O porteiro de B deve ser avisado da nova vaga.
@@ -223,7 +273,7 @@ void morre (int tempo, struct heroi h, struct base b){
 // cria e insere na LEF o evento AVISA (agora, B)
 }
 
-void missoes (int tempo, struct missao m){
+void missoes (struct mundo *m, int tempo, int id_heroi, int id_base) struct missao m){
 // calcula a dist^ancia de cada base ao local da miss~ao M
 // encontra BMP = base mais pr´oxima da miss~ao cujos her´ois possam cumpri-la
 
@@ -245,7 +295,7 @@ void missoes (int tempo, struct missao m){
 
 }
 
-void fim (int tempo){
+void fim (struct mundo *m, int tempo, int id_heroi, int id_base){
 // encerra a simula¸c~ao
 // apresenta estat´ısticas dos her´ois
 // apresenta estat´ısticas das bases
