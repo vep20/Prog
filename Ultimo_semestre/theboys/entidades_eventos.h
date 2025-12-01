@@ -6,7 +6,7 @@
 #include "fila.h"
 
 #define T_INICIO 0
-#define T_FIM_DO_MUNDO 50000 //525600
+#define T_FIM_DO_MUNDO 525600
 #define N_TAMANHO_MUNDO 20000
 #define N_HABILIDADES 10
 #define N_HEROIS N_HABILIDADES * 5 
@@ -33,6 +33,7 @@ struct heroi{
     int velocidade;
     int experiencia;
     int ID_base;
+    bool vivo;
 };
 
 struct local{
@@ -46,12 +47,16 @@ struct base{
     struct local lb;
     int ID;
     int lotacao;
+    int max_fila;
+    int n_missoes;
 };
 
 struct missao{
     struct cjto_t *habilidades;
     struct local lm;
     int ID;
+    int tentativas;
+    bool cumprida;
 };
 
 struct mundo{
@@ -66,6 +71,7 @@ struct mundo{
     int nhabilidades; // numero de habilidades
     int nCompostoV; // numero de compostos V disponiveis
     int relogio;
+    long total_eventos;
 };
 
 // Estrutra utilzada para auxiliar a inserer os eventos na LEF
@@ -75,11 +81,27 @@ struct dado_evento{
     int dado2; // ID base 
 };
 
+// Estrutura auxiliar para ajudar a medir as distancias da base e posteriormente imprimir por distancia
+struct distancia_missao{
+    int id_base;
+    int distancia;
+};
+
 // Função mensagem de erro
 void erro (char *msg);
 
 // Função que cria e retorna um número aleatório entre min e max
 int aleat (int min, int max);
+
+// Função auxiliar para trocar dois elementos de lugar
+void troca(struct distancia_missao *a, struct distancia_missao *b);
+
+// Função de ordenação para auxiliar o evento missão na analise das bases por ordem crescente
+// Utiliza selection sort 
+void ordena_vetor (struct distancia_missao *vetor, int n);
+
+// Função que calcula a distancia de uma base até a outra
+long calcula_distancia (struct local origem, struct local destino);
 
 // Função para auxiliar criar dados que irão na LEF
 struct dado_evento *insere_dados (int d1, int d2);
@@ -107,7 +129,6 @@ void desiste (struct mundo *m, int tempo, int id_heroi, int id_base);
 // Função onde o porteiro da base B trata a fila de espera
 void avisa (struct mundo *m, int tempo, int id_heroi, int id_base);
 
-/*
 // Função onde um herói H entra na base B. Ao entrar, o herói 
 // decide quanto tempo vai ficar e agenda sua saída da base
 void entra (struct mundo *m, int tempo, int id_heroi, int id_base);
@@ -125,7 +146,8 @@ void viaja (struct mundo *m, int tempo, int id_heroi, int id_base);
 // - O herói é retirado da base B e libera uma vaga na base.
 // - O porteiro de B deve ser avisado da nova vaga.
 // - Eventos futuros de um herói morto devem ser ignorados.
-void morre (struct mundo *m, int tempo, int id_heroi, int id_base);
+void morre (struct mundo *m, int tempo, int id_heroi, int id_missao);
+
 
 // Função onde uma missão M é disparada no instante T. São características de uma missão:
 // - Cada missão ocorre em um local aleatório e requer um conjunto aleatório de 
@@ -138,11 +160,10 @@ void morre (struct mundo *m, int tempo, int id_heroi, int id_base);
 // - Ao completar uma missão, os heróis da equipe escolhida ganham pontos de experiência.
 // - Um herói pode morrer ao participar de uma missão. :NEW:
 // - Se uma missão não puder ser completada, ela é marcada como “impossível” e adiada de 24 horas.
-void missoes (struct mundo *m, int tempo, int id_heroi, int id_base);struct missao m);
+void missao (struct mundo *m, int tempo, int id_heroi, int id_base);
 
 // Função onde se encerra a simulação, gerando um relatório com informações sobre heróis, 
 // bases e missões.
-void fim (struct mundo *m, int tempo, int id_heroi, int id_base);
-*/
+void fim (struct mundo *m, int tempo);
 
 #endif

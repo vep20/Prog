@@ -10,7 +10,7 @@ int main (){
   struct mundo *novo_mundo;
   struct dado_evento *ev;
   int tipo_ev, tempo;
-  //srand(0);
+  srand(0);
 
   // Cria um mundo baseado na struct mundo 
   // Inicia os elementos da struct mundo se criada
@@ -19,7 +19,6 @@ int main (){
     erro ("Erro ao criar o mundo!");
 
   eventos_iniciais (novo_mundo);
-
 
   // Executa o laço de simulação
   while (novo_mundo->relogio < T_FIM_DO_MUNDO){

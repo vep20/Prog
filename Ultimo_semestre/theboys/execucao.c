@@ -13,6 +13,7 @@ struct mundo *cria_mundo (){
     aux->TamanhoMundo.x = N_TAMANHO_MUNDO;
     aux->TamanhoMundo.y = N_TAMANHO_MUNDO;
     aux->relogio = T_INICIO;
+    aux->total_eventos = 0;
     aux->nhabilidades = N_HABILIDADES;
     aux->nherois = N_HEROIS;
     aux->nbases = N_BASES;
@@ -42,6 +43,7 @@ struct heroi inicia_heroi (int id){
     novo_heroi.experiencia = 0;
     novo_heroi.paciencia = aleat (0, 100);
     novo_heroi.velocidade = aleat (50, 5000);
+    novo_heroi.vivo = true;
     
     // Novo_heroi.ID_base não inciado aqui
 
@@ -74,9 +76,11 @@ struct base inicia_base (int id){
     nova_base.lb.x = aleat (0, N_TAMANHO_MUNDO - 1);
     nova_base.lb.y = aleat (0, N_TAMANHO_MUNDO - 1);
     nova_base.ID = id;
+    nova_base.max_fila = 0;
+    nova_base.n_missoes = 0;
 
     nova_base.lotacao = aleat (3, 10);  
-    nova_base.presentes = cjto_cria (nova_base.lotacao);
+    nova_base.presentes = cjto_cria (N_HEROIS);
     // Conjunto vazio (com capacidade para armazenar IDs 
     // de heróis até a lotação da base)
 
@@ -109,6 +113,8 @@ struct missao inicia_missao (int id){
     nova_missao.lm.x = aleat (0, N_TAMANHO_MUNDO - 1);
     nova_missao.lm.y = aleat (0, N_TAMANHO_MUNDO - 1);
     nova_missao.ID = id;
+    nova_missao.tentativas = 0;
+    nova_missao.cumprida = false;
 
     qnt_hab = aleat (6, 10);
     nova_missao.habilidades = cjto_aleat (qnt_hab, N_HABILIDADES);
