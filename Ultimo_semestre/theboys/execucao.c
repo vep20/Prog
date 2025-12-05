@@ -142,7 +142,7 @@ int cria_missoes (struct mundo *m){
  
 void libera_herois (struct mundo *m){
 
-    if (!m->herois)
+    if (!m)
         return;
 
     // Percorre o vetor até a quantidade de herois ainda presentes no mundo
@@ -154,7 +154,7 @@ void libera_herois (struct mundo *m){
 
 void libera_bases (struct mundo *m){
 
-    if(!m->bases)
+    if(!m)
         return;
 
     for (int i = 0; i < m->nbases; i++){
@@ -168,7 +168,7 @@ void libera_bases (struct mundo *m){
 
 void libera_missoes (struct mundo *m){
 
-    if (!m->missoes)
+    if (!m)
         return;
 
     // Percorre o vetor até a quantidade de herois ainda presentes no mundo
