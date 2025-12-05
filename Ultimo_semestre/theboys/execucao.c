@@ -45,7 +45,8 @@ struct heroi inicia_heroi (int id){
     novo_heroi.velocidade = aleat (50, 5000);
     novo_heroi.vivo = true;
     
-    // Novo_heroi.ID_base não inciado aqui
+    // correção para entrega final
+    novo_heroi.ID_base = -1;
 
     qnt_hab = aleat (1, 3);
     novo_heroi.habilidades = cjto_aleat (qnt_hab, N_HABILIDADES);
