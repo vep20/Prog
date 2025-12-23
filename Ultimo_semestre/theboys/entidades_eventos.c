@@ -552,17 +552,16 @@ void missao (struct mundo *m, int tempo, int id_missao, int id_base){
       if (cjto_card(m->bases[base_atual].presentes) > 0){
         BPM = base_atual; // 
 
-      // Busca o herói mais experiente na base
-      for (int j = 0; j < m->nherois; j++){
-        if (m->herois[j].ID_base == BPM && m->herois[j].vivo){
-          if (m->herois[j].experiencia > aux_exp){
-            aux_exp = m->herois[j].experiencia;
-            heroi_exp = j;
-          } 
+        // Busca o herói mais experiente na base
+        for (int j = 0; j < m->nherois; j++){
+          if (m->herois[j].ID_base == BPM && m->herois[j].vivo){
+            if (m->herois[j].experiencia > aux_exp){
+              aux_exp = m->herois[j].experiencia;
+              heroi_exp = j;
+            } 
+          }
         }
-      }
-
-      break; // Para a busca de bases
+        break; // Para a busca de bases
       }
     }
 
